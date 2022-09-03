@@ -162,7 +162,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/codeforce/" style="color: #ffa2c4">
+                <a href="/tags/codeforce/" style="color: #ff7d73">
                     codeforce
                 </a>
             </span>
@@ -175,7 +175,8 @@
 <span id="more"></span> 
 <h1 id="基础算法"><a href="#基础算法" class="headerlink" title="基础算法"></a>基础算法</h1><p>主要实现了排序算法，二分算法以及相应的高精度计算</p>
 <h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p>函数实现</p>
-<pre><code>// 快速排序 平均时间复杂度O(nlogn)
+<pre><code class="c++">
+// 快速排序 平均时间复杂度O(nlogn)
 void qsort(int a[],int l,int r)&#123;
     if(l&gt;=r) return;
     int x=a[l],i=l-1,j=r+1;
@@ -189,10 +190,10 @@ void qsort(int a[],int l,int r)&#123;
 &#125;
 </code></pre>
 <p>函数调用</p>
-<pre><code>qsort(a,0,n-1);
+<pre><code class="c++">qsort(a,0,n-1);
 </code></pre>
 <h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><p>函数实现</p>
-<pre><code>int tmp[N];
+<pre><code class="c++">int tmp[N];
 // 归并排序 平均时间复杂度O(nlogn)
 void msort(int a[],int l,int r)&#123;
     if(l&gt;=r) return;
@@ -209,10 +210,10 @@ void msort(int a[],int l,int r)&#123;
 &#125;
 </code></pre>
 <p>函数调用</p>
-<pre><code>msort(a,0,n-1);
+<pre><code class="c++">msort(a,0,n-1);
 </code></pre>
 <h1 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h1><p>二分法本质上是需要找到对应的边界存在的位置，所以理论上二分法并不需要要求区间是单调的。<br>根据分类数据的不同，我们将问题分为整数二分和浮点数二分，对于整数二分而言，考虑到其存在的可行边界，所以整数二分存在两种模板。<br><img src="/2022/09/02/%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF/1.png" alt="二分法的两种情况"><br>· 找到右区间的边界点</p>
-<pre><code>int l=0,r=n-1;
+<pre><code class="c++">int l=0,r=n-1;
 while(l&lt;r)&#123;
     int mid=l+r&gt;&gt;1;
     if(check(x)) r=mid;
@@ -220,7 +221,7 @@ while(l&lt;r)&#123;
 &#125;
 </code></pre>
 <p>· 找到左区间的边界点</p>
-<pre><code>int l=0,r=n-1;
+<pre><code class="c++">int l=0,r=n-1;
 while(l&lt;r)&#123;
     int mid=l+r+1&gt;&gt;1;
     if(check(x)) l=mid;
@@ -230,7 +231,7 @@ while(l&lt;r)&#123;
 <p><strong>其中+1的含义就是为了避免出现越界的情况。</strong></p>
 <h2 id="高精度算法"><a href="#高精度算法" class="headerlink" title="高精度算法"></a>高精度算法</h2><p>高精度算法主要是为了解决正常求解下可能存在的溢出的运算，如下是对应加减乘除的实现过程。</p>
 <h3 id="高精度加法"><a href="#高精度加法" class="headerlink" title="高精度加法"></a>高精度加法</h3><p>函数实现</p>
-<pre><code>vector&lt;int&gt; add(vector&lt;int&gt;&amp;a,vector&lt;int&gt;&amp;b)&#123;
+<pre><code class="c++">vector&lt;int&gt; add(vector&lt;int&gt;&amp;a,vector&lt;int&gt;&amp;b)&#123;
     vector&lt;int&gt; c;
     int t=0;
     for(int i=0;i&lt;a.size()||i&lt;b.size();i++)&#123;
@@ -244,7 +245,7 @@ while(l&lt;r)&#123;
 &#125;
 </code></pre>
 <p>调用接口</p>
-<pre><code>string a,b;
+<pre><code class="c++">string a,b;
 cin&gt;&gt;a&gt;&gt;b;
 for(int i=a.size()-1;i&gt;=0;i--) A.push_back(a[i]-&#39;0&#39;);
 for(int i=b.size()-1;i&gt;=0;i--) B.push_back(b[i]-&#39;0&#39;);
@@ -252,7 +253,7 @@ auto c=add(A,B);
 for(int i=c.size()-1;i&gt;=0;i--) printf(&quot;%d&quot;,c[i]);
 </code></pre>
 <h3 id="高精度减法"><a href="#高精度减法" class="headerlink" title="高精度减法"></a>高精度减法</h3><p>函数实现</p>
-<pre><code>// 比较函数的大小
+<pre><code class="c++">// 比较函数的大小
 bool cmp(vector&lt;int&gt;&amp;a,vector&lt;int&gt;&amp;b)&#123;
     if(a.size()!=b.size()) return a.size()&gt;b.size();
     for(int i=a.size()-1;i&gt;=0;i--)&#123;
@@ -275,7 +276,7 @@ vector&lt;int&gt; mul(vector&lt;int&gt; &amp;a,vector&lt;int&gt;&amp;b)&#123;
 &#125;
 </code></pre>
 <p>函数调用</p>
-<pre><code>string a,b;
+<pre><code class="c++">string a,b;
 cin&gt;&gt;a&gt;&gt;b;
 for(int i=a.size()-1;i&gt;=0;i--) A.push_back(a[i]-&#39;0&#39;);
 for(int i=b.size()-1;i&gt;=0;i--) B.push_back(b[i]-&#39;0&#39;);
@@ -290,7 +291,7 @@ else&#123;
 &#125;
 </code></pre>
 <h3 id="高精度乘法"><a href="#高精度乘法" class="headerlink" title="高精度乘法"></a>高精度乘法</h3><p>函数实现</p>
-<pre><code>vector&lt;int&gt; mul(vector&lt;int&gt;&amp;A,int b)&#123;
+<pre><code class="c++">vector&lt;int&gt; mul(vector&lt;int&gt;&amp;A,int b)&#123;
     vector&lt;int&gt;c;
     int t=0;
     for(int i=0;i&lt;c.size()||t;i++)&#123;
@@ -302,7 +303,7 @@ else&#123;
 &#125;
 </code></pre>
 <p>函数实现</p>
-<pre><code>string a;
+<pre><code class="c++">string a;
 int b;
 cin&gt;&gt;a&gt;&gt;b;
 for(int i=a.size()-1;i&gt;=0;i--) A.push_back(a[i]-&#39;0&#39;);
@@ -310,7 +311,7 @@ auto c=mul(A,b)
 for(int i=c.size()-1;i&gt;=0;i--) printf(&quot;%d&quot;,c[i]);
 </code></pre>
 <h3 id="高精度除法"><a href="#高精度除法" class="headerlink" title="高精度除法"></a>高精度除法</h3><p>函数实现</p>
-<pre><code>## 其中b表示除数，t表示余数
+<pre><code class="c++">// 其中b表示除数，t表示余数
 vector&lt;int&gt; div(vector&lt;int&gt;&amp;a,int b,int &amp;t)&#123;
     vector&lt;int&gt;c;
     int t=0;
@@ -325,7 +326,7 @@ vector&lt;int&gt; div(vector&lt;int&gt;&amp;a,int b,int &amp;t)&#123;
 &#125;
 </code></pre>
 <p>函数实现</p>
-<pre><code>string a;
+<pre><code class="c++">string a;
 int b;
 for(int i=a.size()-1;i&gt;=0;i--) A.push_back(a[i]-&#39;0&#39;);
 int r=0;

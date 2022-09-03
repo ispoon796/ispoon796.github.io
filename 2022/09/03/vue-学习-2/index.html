@@ -162,7 +162,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/vue/" style="color: #ff7d73">
+                <a href="/tags/vue/" style="color: #03a9f4">
                     vue
                 </a>
             </span>
@@ -174,12 +174,12 @@
         <p>该部分是对vue框架中响应式基础部分的学习</p>
 <span id="more"></span> 
 <h1 id="响应式语法"><a href="#响应式语法" class="headerlink" title="响应式语法"></a>响应式语法</h1><h2 id="声明响应状态"><a href="#声明响应状态" class="headerlink" title="声明响应状态"></a>声明响应状态</h2><p>我们可以使用<code>reactive()</code>函数创建一个响应式对象或者数组：</p>
-<pre><code>import &#123; reactive &#125; from &#39;vue&#39;
+<pre><code class="js">import &#123; reactive &#125; from &#39;vue&#39;
 
 const state = reactive(&#123; count: 0 &#125;)
 </code></pre>
 <p>响应式对象其实是JavaScript Proxy，其行为表现与一般对象相似。不同之处在于Vue能够跟踪对响应式对象属性的访问与更改操作。如果要遭组件模板中使用响应式状态，需要在<code>setup()</code>函数中定义并返回。</p>
-<pre><code>import &#123; reactive &#125; from &#39;vue&#39;
+<pre><code class="js">import &#123; reactive &#125; from &#39;vue&#39;
 export default&#123;
     setup()&#123;
         const state = reactive(&#123;count:0&#125;)
@@ -190,10 +190,10 @@ export default&#123;
     &#125;
 &#125;
 </code></pre>
-<pre><code>&lt;div&gt;&#123;&#123; state.count &#125;&#125;&lt;/div&gt;
+<pre><code class="html">&lt;div&gt;&#123;&#123; state.count &#125;&#125;&lt;/div&gt;
 </code></pre>
 <p>自然，我们也可以在同一个作用域下更新一个<code>state</code>的函数，并作为一个方法与<code>state</code>一起暴露出去</p>
-<pre><code>import &#123; reactive &#125; from &#39;vue&#39;
+<pre><code class="js">import &#123; reactive &#125; from &#39;vue&#39;
 
 export default &#123;
   setup() &#123;
@@ -212,12 +212,12 @@ export default &#123;
 &#125;
 </code></pre>
 <p>暴露的方法通常会被用作事件监听器：</p>
-<pre><code>&lt;button @click=&quot;increment&quot;&gt;
+<pre><code class="html">&lt;button @click=&quot;increment&quot;&gt;
   &#123;&#123; state.count &#125;&#125;
 &lt;/button&gt;
 </code></pre>
 <p>在<code>setup()</code>函数中手动暴露大量的状态和方法非常琐碎。幸运的是，我们可以通过使用构建工具来简化该操作。当使用单文件组件（SFC）时，我们可以使用<code>&lt;srcipt setup&gt;</code>来大幅度的简化代码。</p>
-<pre><code>&lt;script setup&gt;
+<pre><code class="html">&lt;script setup&gt;
 import &#123; reactive &#125; from &#39;vue&#39;
 
 const state = reactive(&#123; count: 0 &#125;)
@@ -235,7 +235,7 @@ function increment() &#123;
 </code></pre>
 <p><code>&lt;script setup&gt;</code>中的顶层的导入和变量声明可在同一个组件的模板中直接使用。你可以理解为模板中的表达式和<code>&lt;script setup&gt;</code>中的代码处在同一个作用域中。</p>
 <h3 id="DOM更新时机"><a href="#DOM更新时机" class="headerlink" title="DOM更新时机"></a>DOM更新时机</h3><p>当你更改响应式状态后，DOM也会自动更新。然而，你得注意DOm的更新并不是同步的。相反，vue将缓冲他们直到更新周期”下个时机”以确保无论你进行了多少次声明更改，每个组件都只需要更新一次。<br>若要等待一个状态改变后的DOM更新完成后，你可以使用nextTick()这个全局的API</p>
-<pre><code>import &#123; nextTick &#125; from &#39;vue&#39;
+<pre><code class="js">import &#123; nextTick &#125; from &#39;vue&#39;
 
 function increment() &#123;
   state.count++
@@ -245,7 +245,7 @@ function increment() &#123;
 &#125;
 </code></pre>
 <h3 id="深层响应性"><a href="#深层响应性" class="headerlink" title="深层响应性"></a>深层响应性</h3><p>在vue中，状态都是默认深层响应式的。这意味着即使在更改深层次的对象或数组，你的改动也能被检测到。</p>
-<pre><code>import &#123; reactive &#125; from &#39;vue&#39;
+<pre><code class="js">import &#123; reactive &#125; from &#39;vue&#39;
 
 const obj = reactive(&#123;
   nested: &#123; count: 0 &#125;,
@@ -260,21 +260,21 @@ function mutateDeeply() &#123;
 </code></pre>
 <p>也就是，即使对象是深层的，我们也可以检测到结果。</p>
 <h3 id="响应式-vs-原始对象"><a href="#响应式-vs-原始对象" class="headerlink" title="响应式 vs 原始对象"></a>响应式 vs 原始对象</h3><p>值得注意的是，<code>reactive()</code>返回的是一个原始对象的proxy，他和原始对象是不相等的：</p>
-<pre><code>const raw = &#123;&#125;
+<pre><code class="js">const raw = &#123;&#125;
 const proxy = reactive(raw)
 
 // 代理对象和原始对象不是全等的
 console.log(proxy === raw) // false
 </code></pre>
 <p>只有代理对象是响应式的，更改院士对象并不会触发更新。因此，使用vue的相应式系统的最佳实践是<strong>仅适用你声明对象的代理版本。</strong><br>为保证访问代理的一致性，对同一个原始对象调用<code>reactive()</code>会总是返回同样的代理对象，而对一个已存在的代理对象调用<code>reactive()</code>会返回其本身</p>
-<pre><code>// 在同一个对象上调用 reactive() 会返回相同的代理
+<pre><code class="js">// 在同一个对象上调用 reactive() 会返回相同的代理
 console.log(reactive(raw) === proxy) // true
 
 // 在一个代理上调用 reactive() 会返回它自己
 console.log(reactive(proxy) === proxy) // true
 </code></pre>
 <p>这个规则对嵌套对象也适用。依靠深层响应性，响应式对象内的嵌套对象依旧是代理：</p>
-<pre><code>const proxy = reactive(&#123;&#125;)
+<pre><code class="js">const proxy = reactive(&#123;&#125;)
 
 const raw = &#123;&#125;
 proxy.nested = raw
@@ -282,13 +282,13 @@ proxy.nested = raw
 console.log(proxy.nested === raw) // false
 </code></pre>
 <h3 id="reactive-局限性"><a href="#reactive-局限性" class="headerlink" title="reactive()局限性"></a>reactive()局限性</h3><p><code>reactive()</code> API有两条限制：<br>1.仅对对象类型有效(对象、数组和<code>Map</code>、<code>set</code>这样的集合类型)，而对<code>string</code>、<code>number</code>和<code>boolean</code>这样的原始类型无效。<br>2.因为vue的响应式系统是通过属性访问进行追踪的，因此我们必须始终保持对该响应式对象的相同引用。这意味着我们不可以随意的“替换”一个响应式对象，因为这将导致对初始引用的响应性连接丢失。</p>
-<pre><code>let state = reactive(&#123; count: 0 &#125;)
+<pre><code class="js">let state = reactive(&#123; count: 0 &#125;)
 
 // 上面的引用 (&#123; count: 0 &#125;) 将不再被追踪（响应性连接已丢失！）
 state = reactive(&#123; count: 1 &#125;)
 </code></pre>
 <p>同时这也意味着当我们将响应式对象的属性赋值或解构至本地变量时，或是将该属性传入一个函数时，我们会失去响应性：</p>
-<pre><code>const state = reactive(&#123; count: 0 &#125;)
+<pre><code class="js">const state = reactive(&#123; count: 0 &#125;)
 
 // n 是一个局部变量，同 state.count
 // 失去响应性连接
@@ -306,7 +306,7 @@ count++
 callSomeFunction(state.count)
 </code></pre>
 <h2 id="用ref-定义相应变量"><a href="#用ref-定义相应变量" class="headerlink" title="用ref()定义相应变量"></a>用<code>ref()</code>定义相应变量</h2><p><code>reactive()</code>的种种限制归根结底是因为JavaScript没有可以作用于所有值类型的“引用”机制。为此，vue提出了一个<code>ref()</code>方法允许我们创建可以使用任何值类型的响应式ref:</p>
-<pre><code>import &#123; ref &#125; from &#39;vue&#39;
+<pre><code class="js">import &#123; ref &#125; from &#39;vue&#39;
 
 const count = ref(0)
 
@@ -320,7 +320,7 @@ count.value++
 console.log(count.value) // 1
 </code></pre>
 <p>ref被传递给函数或是从一般对象上被解构时，不会彻底失去响应性的。</p>
-<pre><code>const obj = &#123;
+<pre><code class="js">const obj = &#123;
   foo: ref(1),
   bar: ref(2)
 &#125;
@@ -335,7 +335,7 @@ const &#123; foo, bar &#125; = obj
 </code></pre>
 <p>简而言之，<code>ref()</code>让我们能创造一种任意值的”引用”，并能够在不丢失响应性的前提下传递这些引用。这个功能很重要，因为他经常用于将逻辑提取到组合函数中。</p>
 <h3 id="ref-在模板中的解包："><a href="#ref-在模板中的解包：" class="headerlink" title="ref 在模板中的解包："></a>ref 在模板中的解包：</h3><p>当ref在模板中作为顶层的属性被访问时，他们会被自动“解包”，所以不需要使用<code>.value</code>。下面是之前计数器的例子。</p>
-<pre><code>&lt;script setup&gt;
+<pre><code class="html">&lt;script setup&gt;
 import &#123; ref &#125; from &#39;vue&#39;
 
 const count = ref(0)
@@ -352,22 +352,22 @@ function increment() &#123;
 &lt;/template&gt;
 </code></pre>
 <p>请注意，仅仅当ref是模板渲染上下文的顶层属性时才会自动“解包”。例如，foo是顶层属性，object.foo不是</p>
-<pre><code>const object = &#123; foo: ref(1) &#125;
+<pre><code class="js">const object = &#123; foo: ref(1) &#125;
 </code></pre>
 <p>下面的表达式将不会像预期的那样工作</p>
-<pre><code>&#123;&#123; object.foo + 1 &#125;&#125;
+<pre><code class="js">&#123;&#123; object.foo + 1 &#125;&#125;
 </code></pre>
 <p>渲染的结果会是一个<code>[object object]</code>，因为<code>object.foo</code>是一个ref对象。我们可以通过将<code>foo</code>改成顶层属性来解决这个问题</p>
-<pre><code>const &#123; foo &#125; = object
+<pre><code class="js">const &#123; foo &#125; = object
 </code></pre>
-<pre><code>&#123;&#123; foo + 1 &#125;&#125;
+<pre><code class="js">&#123;&#123; foo + 1 &#125;&#125;
 </code></pre>
 <p>对应的渲染结果就是2<br>需要注意的是，如果ref是一个文本插值的话（即一个<code>&#123;&#123;&#125;&#125;</code>符号）计算的最终值，他也将会被解包。因此下面的渲染结果是1:</p>
-<pre><code>&#123;&#123;object.foo&#125;&#125;
+<pre><code class="js">&#123;&#123;object.foo&#125;&#125;
 </code></pre>
 <p>这只是文本插值的一个方便功能，相当于<code>&#123;&#123;object.foo.value&#125;&#125;</code></p>
 <h3 id="ref-在响应式对象中的解包"><a href="#ref-在响应式对象中的解包" class="headerlink" title="ref 在响应式对象中的解包"></a>ref 在响应式对象中的解包</h3><p>当一个<code>ref</code>被嵌套在一个响应式对象中，作为属性被访问或更改时，他会自动解包。因此会表现得和一般的属性一样：</p>
-<pre><code>const count = ref(0)
+<pre><code class="js">const count = ref(0)
 const state = reactive(&#123;
   count
 &#125;)
@@ -378,7 +378,7 @@ state.count = 1
 console.log(count.value) // 1
 </code></pre>
 <p>如果将一个新的ref赋值给一个关联了已有ref的属性，那么他会替换掉旧的ref:</p>
-<pre><code>const otherCount = ref(2)
+<pre><code class="js">const otherCount = ref(2)
 
 state.count = otherCount
 console.log(state.count) // 2
@@ -387,7 +387,7 @@ console.log(count.value) // 1
 </code></pre>
 <p>只有当嵌套在一个深层响应式对象内时，才会发生ref解包。当其作为浅层响应式对象的属性被访问时不会解包。</p>
 <h4 id="数组和集合类型的ref解包"><a href="#数组和集合类型的ref解包" class="headerlink" title="数组和集合类型的ref解包"></a>数组和集合类型的ref解包</h4><p>根相应式对象不同，当ref作为响应式数据或者像<code>map</code>这种原生集合类型的元素被访问时，不会进行解包。</p>
-<pre><code>const books = reactive([ref(&#39;Vue 3 Guide&#39;)])
+<pre><code class="js">const books = reactive([ref(&#39;Vue 3 Guide&#39;)])
 // 这里需要 .value
 console.log(books[0].value)
 
@@ -396,7 +396,7 @@ const map = reactive(new Map([[&#39;count&#39;, ref(0)]]))
 console.log(map.get(&#39;count&#39;).value)
 </code></pre>
 <h2 id="响应式语法糖："><a href="#响应式语法糖：" class="headerlink" title="响应式语法糖："></a>响应式语法糖：</h2><p>相对于普通的JavaScript变量，我们不得不用相对繁琐的<code>.value</code>来获取ref的值。这一个受限于javascript语言限制的缺点。然而，通过编译时的转换，我们可以让编译器帮我们省去用<code>.value</code>的麻烦。vue提供了一种编译时转换，使我们可以像这样书写之前的”计数器”示例：</p>
-<pre><code>&lt;script setup&gt;
+<pre><code class="html">&lt;script setup&gt;
 let count = $ref(0)
 
 function increment() &#123;
@@ -410,7 +410,7 @@ function increment() &#123;
 &lt;/template&gt;
 </code></pre>
 <h1 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h1><h2 id="基础示例"><a href="#基础示例" class="headerlink" title="基础示例"></a>基础示例</h2><p>模板中的表达式虽然比较方便，但也只能用来做简单操作，如果我们在模板中写太多的逻辑，会让模板难以维护。</p>
-<pre><code>const author = reactive(&#123;
+<pre><code class="js">const author = reactive(&#123;
   name: &#39;John Doe&#39;,
   books: [
     &#39;Vue 2 - Advanced Guide&#39;,
@@ -420,11 +420,11 @@ function increment() &#123;
 &#125;)
 </code></pre>
 <p>我们想根据<code>author</code>是否已有一些书籍来展示不同的信息：</p>
-<pre><code>&lt;p&gt;Has published books:&lt;/p&gt;
+<pre><code class="html">&lt;p&gt;Has published books:&lt;/p&gt;
 &lt;span&gt;&#123;&#123; author.books.length > 0 ? 'Yes' : 'No' &#125;&#125;&lt;/span&gt;
 </code></pre>
 <p>同样的，如果模板中需要不止一次这样的计算，会增加代码的冗余性。因此，我们推荐计算属性来描述依赖响应式状态的复杂逻辑。如上的代码可以写成如上的形式：</p>
-<pre><code>&lt;script setup&gt;
+<pre><code class="html">&lt;script setup&gt;
 import &#123; reactive, computed &#125; from &#39;vue&#39;
 
 const author = reactive(&#123;
@@ -449,7 +449,7 @@ const publishedBooksMessage = computed(() =&gt; &#123;
 </code></pre>
 <p>在这里我们定义了一个计算属性<code>publishedBooksMessage</code>。<code>computed()</code>方法期望接受一个getter函数返回值为一个计算属性ref。和其他一般的ref类似，你可以通过<code>publishedBooksMessage.value</code>访问计算结果。计算属性ref也会在模板中自动解包，因此在模板表达式中引用时无需添加<code>.value</code>。<br>vue的计算属性会自动追踪响应式依赖，他会检测到<code>publishedBooksMessage</code>依赖于<code>author.books</code>，所以当<code>author.books</code>改变时，任何依赖于<code>publishedBooksMessage</code>的绑定都会同时更新。</p>
 <h2 id="计算属性缓存-vs-方法"><a href="#计算属性缓存-vs-方法" class="headerlink" title="计算属性缓存 vs 方法"></a>计算属性缓存 vs 方法</h2><p>对于上述的展示效果而言，我们同样可以通过调用函数的方式获得和计算属性相同的结果。</p>
-<pre><code>&lt;p&gt;&#123;&#123; calculateBooksMessage() &#125;&#125;&lt;/p&gt;
+<pre><code class="html">&lt;p&gt;&#123;&#123; calculateBooksMessage() &#125;&#125;&lt;/p&gt;
 </code></pre>
 <pre><code>// 组件中
 function calculateBooksMessage() &#123;
@@ -457,11 +457,11 @@ function calculateBooksMessage() &#123;
 &#125;
 </code></pre>
 <p>若我们将同样的函数定义为一个方法而不是计算属性，两种方式在结果上确实是完全相同的，然而，不同之处在于计算属性会基于响应式的依赖被缓存。一个计算属性仅会在其响应式依赖更新时才会重新计算。这意味着，只要<code>author.books</code>不改变，无论多少次访问<code>publishedBooksMessage</code>都会立即返回先前计算的结果，而不用重复执行getter函数。<br>这也解释了为什么下面的计算属性永运不会更新，因为<code>Date.now()</code>并不是一个响应式依赖。</p>
-<pre><code>const now = computed(() =&gt; Date.now())
+<pre><code class="js">const now = computed(() =&gt; Date.now())
 </code></pre>
 <p>相比之下，方法调用总是会在重渲染发生的时候在此执行函数。<br>缓存可以较大程度上的节省计算性能。</p>
 <h2 id="可写计算属性"><a href="#可写计算属性" class="headerlink" title="可写计算属性"></a>可写计算属性</h2><p>计算属性默认仅能通过计算函数得出结果。当你尝试修改一个计算属性时，你会收到一个运行警告。只在某些特殊场景下你可能才需要用到“可写”的属性，你可以通过同时提供给getter和setter来创建。</p>
-<pre><code>&lt;script setup&gt;
+<pre><code class="js">&lt;script setup&gt;
 import &#123; ref, computed &#125; from &#39;vue&#39;
 
 const firstName = ref(&#39;John&#39;)

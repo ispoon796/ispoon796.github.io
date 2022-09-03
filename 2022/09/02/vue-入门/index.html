@@ -162,7 +162,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/vue/" style="color: #ff7d73">
+                <a href="/tags/vue/" style="color: #03a9f4">
                     vue
                 </a>
             </span>
@@ -174,7 +174,7 @@
         <p>主要介绍的vue组件部分的相关知识，以及有关指令方面的说明。</p>
 <span id="more"></span> 
 <h1 id="创建一个Vue应用"><a href="#创建一个Vue应用" class="headerlink" title="创建一个Vue应用"></a>创建一个Vue应用</h1><h2 id="应用示例"><a href="#应用示例" class="headerlink" title="应用示例"></a>应用示例</h2><p>每个Vue应用同时通过createApp函数创建一个新的应用示例，也就是从某种意义上，vue是一个面向组件的语言</p>
-<pre><code>import &#123;createApp&#125; from &#39;vue&#39;
+<pre><code class="js">import &#123;createApp&#125; from &#39;vue&#39;
 const app=createApp&#123;&#123;
     /*根组件选项*/ 
 &#125;&#125;
@@ -191,17 +191,17 @@ const app=createApp&#123;&#123;
 </code></pre>
 <p>在后续我们将会学习如何定义和组合多个组件。下面我们将关注一个组件内部发生了什么。</p>
 <h2 id="挂载应用"><a href="#挂载应用" class="headerlink" title="挂载应用"></a>挂载应用</h2><p>应用实例必须在调用了<code>.mount()</code>方法后才会渲染出来。该方法接受相应的容器参数，可以是一个实际的DOM元素后世一个css选择器的字符串。</p>
-<pre><code>&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;
+<pre><code class="html">&lt;div id=&quot;app&quot;&gt;&lt;/div&gt;
 </code></pre>
-<pre><code>app.mount(&#39;#app&#39;)
+<pre><code class="html">app.mount(&#39;#app&#39;)
 </code></pre>
 <p>应用根组件的内容将会被渲染在容器元素里面。容器元素自己将不会被视为应用的一部分。<code>mount()</code>方法应该始终在整个应用配置和资源注册完成后被调用，对应的返回值是根组件实例而非应用实例。</p>
 <h2 id="DOM中的根组件模板"><a href="#DOM中的根组件模板" class="headerlink" title="DOM中的根组件模板"></a>DOM中的根组件模板</h2><p>在未采用构建流程的情况下适用vue时，我们可以挂载容器中直接书写根组件模板。</p>
-<pre><code>&lt;div id=&quot;app&quot;&gt;
+<pre><code class="html">&lt;div id=&quot;app&quot;&gt;
   &lt;button @click=&quot;count++&quot;&gt;&#123;&#123; count &#125;&#125;&lt;/button&gt;
 &lt;/div&gt;
 </code></pre>
-<pre><code>import &#123; createApp &#125; from &#39;vue&#39;
+<pre><code class="js">import &#123; createApp &#125; from &#39;vue&#39;
 const app = createApp(&#123;
   data() &#123;
     return &#123;
@@ -213,46 +213,46 @@ app.mount(&#39;#app&#39;)
 </code></pre>
 <p>当根组件没有设置<code>template</code>选项时，Vue将自动适用容器的<code>innerHTML</code>作为模板。</p>
 <h2 id="应用配置"><a href="#应用配置" class="headerlink" title="应用配置"></a>应用配置</h2><p>应用实例会提供一个<code>.config</code>对象允许我们配置一些应用级的选项，例如定义一个应用级别的错误处理器，将捕获所有由子组件上抛未被处理的任务。</p>
-<pre><code>app.config.errorHandler = (err) =&gt; &#123;
+<pre><code class="js">app.config.errorHandler = (err) =&gt; &#123;
   /* 处理错误 */
 &#125;
 </code></pre>
 <p>应用实例还提供了一些方法来注销应用范围内可用的资源，例如注销一个组件：</p>
-<pre><code>app.component(&quot;TodoDeleteButton&quot;,TodoDeleteButton)
+<pre><code class="js">app.component(&quot;TodoDeleteButton&quot;,TodoDeleteButton)
 </code></pre>
 <p>这使得我们可以在任何地方使用<code>TodoDeleteButton</code>，从而实现对组件的注销。</p>
 <h2 id="多个应用实例"><a href="#多个应用实例" class="headerlink" title="多个应用实例"></a>多个应用实例</h2><p>应用实例并不只限于一个，<code>createApp</code> API允许在同一个页面上创建多个共存的vue应用，并且每个应用都拥有自己的用于配置和全局资源的作用域。</p>
 <h1 id="模板语法"><a href="#模板语法" class="headerlink" title="模板语法"></a>模板语法</h1><p>Vue是一种基于HTML的模板语法，使我们能够声明式的将组件实例的数据绑定到呈现的DOM上。所有的vue模板都是语法层面合法的HTML，可以被符合规范的浏览器和HTML解释器解析。<br>在底层机制中，Vue会将模板编译成高度优化的JavaScript代码。结合响应式系统，当应用状态变更时，Vue能够智能的推导出需要重新渲染的组建的最少数量，并应用最少的DOM操作。</p>
 <h2 id="文本插值"><a href="#文本插值" class="headerlink" title="文本插值"></a>文本插值</h2><p>最基本的数据板顶方式是文本插值，它使用的是”Mustance”语法(双大括号语法)。</p>
-<pre><code>&lt;span&gt;Message: &#123;&#123; msg &#125;&#125;&lt;/span&gt;
+<pre><code class="html">&lt;span&gt;Message: &#123;&#123; msg &#125;&#125;&lt;/span&gt;
 </code></pre>
 <p>其中大括号中的值会随着msg的变换而变换。同时，对应的msg的属性变化的时候他也会同步更新。</p>
 <h2 id="原始Html"><a href="#原始Html" class="headerlink" title="原始Html"></a>原始Html</h2><p>双大括号会使得对应的数据插值为纯文本，而不是HTML。如果想要插入HTML，需要使用<code>v-html</code></p>
-<pre><code>&lt;p&gt;Using text interpolation: &#123;&#123; rawHtml &#125;&#125;&lt;/p&gt;
+<pre><code class="html">&lt;p&gt;Using text interpolation: &#123;&#123; rawHtml &#125;&#125;&lt;/p&gt;
 &lt;p&gt;Using v-html directive: &lt;span v-html=&quot;rawHtml&quot;&gt;&lt;/span&gt;&lt;/p&gt;
 </code></pre>
 <p><code>v-html</code>为一个指令，指令由<code>v-</code>作为前缀，表明他们是一些由vue提供的一些特殊指令。需要注意的是，vue不是一个基于字符串的模板引擎。在使用vue时，应当使用组件作为UI重用和组合的基本单元。</p>
 <h2 id="Attribute绑定"><a href="#Attribute绑定" class="headerlink" title="Attribute绑定"></a>Attribute绑定</h2><p>双大括号不能在HTML attributes 中使用。想要响应式的绑定一个attribute,需要使用<code>v-bind</code>命令。</p>
-<pre><code>&lt;div v-bind:id=&quot;dynamicId&quot;&gt;&lt;/div&gt;
+<pre><code class="html">&lt;div v-bind:id=&quot;dynamicId&quot;&gt;&lt;/div&gt;
 </code></pre>
 <p><code>v-bind</code>指令指示vue将元素的id attribute与组件的<code>dynamicId</code>属性保持一致。如果绑定的值是<code>null``或者</code>undefined<code>，那么该attribute将会从渲染的元素上移除。 因为</code>v-bind&#96;&#96;&#96;非常常用，所以我们提供了特定的简写语法。</p>
-<pre><code>&lt;div :id=&quot;dynamicId&quot;&gt;&lt;/div&gt;
+<pre><code class="html">&lt;div :id=&quot;dynamicId&quot;&gt;&lt;/div&gt;
 </code></pre>
 <h2 id="布尔型-Attribute"><a href="#布尔型-Attribute" class="headerlink" title="布尔型 Attribute"></a>布尔型 Attribute</h2><p>布尔型 attribute 依据true &#x2F; false的值来决定attribute是否存在于该元素上。正如<code>disabled</code>而言</p>
-<pre><code>&lt;button :disabled=&quot;isButtonDisabled&quot;&gt;Button&lt;/button&gt;
+<pre><code class="html">&lt;button :disabled=&quot;isButtonDisabled&quot;&gt;Button&lt;/button&gt;
 </code></pre>
 <p>当<code>isButtonDisabled</code>为真值或一个空的字符串的时，元素会包含一个<code>disabled</code>attribute。而当其为其他假值时，attribute将被忽略。</p>
 <h2 id="动态绑定多个值"><a href="#动态绑定多个值" class="headerlink" title="动态绑定多个值"></a>动态绑定多个值</h2><p>如果某个JavaScript对象有多个Attribute时，此时，我们在板顶元素的时候，可以不需要指定具体的某个属性。</p>
-<pre><code>const objectOfAttrs = &#123;
+<pre><code class="js">const objectOfAttrs = &#123;
   id: &#39;container&#39;,
   class: &#39;wrapper&#39;
 &#125;
 </code></pre>
 <p>通过不带参数的<code>v-bind</code>,你可以将他们绑定在单个元素上：</p>
-<pre><code>&lt;div v-bind=&quot;objectOfAttrs&quot;&gt;&lt;/div&gt;
+<pre><code class="html">&lt;div v-bind=&quot;objectOfAttrs&quot;&gt;&lt;/div&gt;
 </code></pre>
 <h2 id="使用JavaScript表达式"><a href="#使用JavaScript表达式" class="headerlink" title="使用JavaScript表达式"></a>使用JavaScript表达式</h2><p>我们仅在模板中绑定了一些简单的属性名。但是vue实际上在所有的数据板顶中支持完整的JavaScript表达式：</p>
-<pre><code>&#123;&#123; number + 1 &#125;&#125;
+<pre><code class="js">&#123;&#123; number + 1 &#125;&#125;
 
 &#123;&#123; ok ? 'YES' : 'NO' &#125;&#125;
 
@@ -261,38 +261,38 @@ app.mount(&#39;#app&#39;)
 &lt;div :id=&quot;`list-$&#123;id&#125;`&quot;&gt;&lt;/div&gt;
 </code></pre>
 <p>这些表达式都会被作为JavaScript，以组件为作用域解析执行。<br>在vue模板内，JavaScript表达式可以被使用在如下场景上：<br>·在文本插值中<br>·在任何vue指令(以<code>v-</code>开头的特殊attribute)attribute的值中<br><strong>需要注意的是，仅仅支持单一的表达式，因而，对于如下的情况下是不可以的!!!</strong></p>
-<pre><code>&lt;!-- 这是一个语句，而非表达式 --&gt;
+<pre><code class="js">&lt;!-- 这是一个语句，而非表达式 --&gt;
 &#123;&#123; var a = 1 &#125;&#125;
 
 &lt;!-- 条件控制也不支持，请使用三元表达式 --&gt;
 &#123;&#123; if (ok) &#123; return message &#125; &#125;&#125;
 </code></pre>
 <h2 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h2><p>可以在绑定的表达式中使用一个组件暴露的方法</p>
-<pre><code>&lt;span :title=&quot;toTitleDate(date)&quot;&gt;
+<pre><code class="html">&lt;span :title=&quot;toTitleDate(date)&quot;&gt;
   &#123;&#123; formatDate(date) &#125;&#125;
 &lt;/span&gt;
 </code></pre>
 <p>需要考虑到，绑定表达式中的方法在组件每次更新时都会被重新调用，因此不应该产生任何副作用。</p>
 <h2 id="受限的全局访问"><a href="#受限的全局访问" class="headerlink" title="受限的全局访问"></a>受限的全局访问</h2><p>模板中表达式将被沙盒化，仅能访问到有效的全局对象列表。</p>
 <h2 id="指令-Directives"><a href="#指令-Directives" class="headerlink" title="指令 Directives"></a>指令 Directives</h2><p>指令是带有<code>v-</code>前缀的特殊attribute。vue提供许多内置指令，包括上面我们所介绍的<code>v-bind</code>和<code>v-html</code><br>指令attribute的期望值为一个JavaScript表示式(除了少数几个例外，即之后要讨论到的<code>v-for</code>、<code>v-on</code>和<code>v-slot</code>)。一个指令的任务是在其表达式的值变换的时候响应式的更新DOM，以<code>v-if</code>为例：</p>
-<pre><code>&lt;p v-if=&quot;seen&quot;&gt;Now you see me&lt;/p&gt;
+<pre><code class="html">&lt;p v-if=&quot;seen&quot;&gt;Now you see me&lt;/p&gt;
 </code></pre>
 <p>这里，<code>v-if</code>指令会根据表达式<code>seen</code>的值的真假来移除&#x2F;插入该</p><p>元素。</p>
 <h2 id="参数Arguments"><a href="#参数Arguments" class="headerlink" title="参数Arguments"></a>参数Arguments</h2><p>某些指令会需要一个”参数”，在指令名后通过一个冒号隔开做标识，例如用<code>v-bind</code>指令来响应式地更新HTML attribute:</p>
-<pre><code>&lt;a v-bind:href=&quot;url&quot;&gt; ... &lt;/a&gt;
+<pre><code class="html">&lt;a v-bind:href=&quot;url&quot;&gt; ... &lt;/a&gt;
 
 &lt;!-- 简写 --&gt;
 &lt;a :href=&quot;url&quot;&gt; ... &lt;/a&gt;
 </code></pre>
 <p>这里<code>href</code>就是一个参数，他告诉<code>v-bind``指令将表达式</code>url<code>的值绑定到元素的</code>href<code> attribute上。在简写中，参数前的一切都会被缩略为一个</code>:<code>字符。 另一个例子是</code>v-on&#96;&#96;&#96;指令，他将会监听DOM事件：</p>
-<pre><code>&lt;a v-on:click=&quot;doSomething&quot;&gt; ... &lt;/a&gt;
+<pre><code class="html">&lt;a v-on:click=&quot;doSomething&quot;&gt; ... &lt;/a&gt;
 
 &lt;!-- 简写 --&gt;
 &lt;a @click=&quot;doSomething&quot;&gt; ... &lt;/a&gt;
 </code></pre>
 <p>这里的参数主要是用来监听事件的名称：<code>clicked</code>。<code>v-on</code>有一个相应的缩写，即<code>@</code>字符。我们之后也会讨论关于事件处理的更多细节。</p>
 <h2 id="动态参数"><a href="#动态参数" class="headerlink" title="动态参数"></a>动态参数</h2><p>同样在指令参数上也可以使用一个JavaScript表达式，需要包含在一对方括号内：</p>
-<pre><code>&lt;!--
+<pre><code class="html">&lt;!--
 注意，参数表达式有一些约束，
 参见下面“动态参数值的限制”与“动态参数语法的限制”章节的解释
 --&gt;
@@ -302,7 +302,7 @@ app.mount(&#39;#app&#39;)
 &lt;a :[attributeName]=&quot;url&quot;&gt; ... &lt;/a&gt;
 </code></pre>
 <p>这里的<code>attributeName</code>会作为一个JavaScript表达式被动态执行，计算得到的值会被用作最终的参数。<br>相似的，你还可以将一个函数绑定到动态的事件名称上</p>
-<pre><code>&lt;a v-on:[eventName]=&quot;doSomething&quot;&gt; ... &lt;/a&gt;
+<pre><code class="html">&lt;a v-on:[eventName]=&quot;doSomething&quot;&gt; ... &lt;/a&gt;
 
 &lt;!-- 简写 --&gt;
 &lt;a @[eventName]=&quot;doSomething&quot;&gt;
@@ -310,7 +310,7 @@ app.mount(&#39;#app&#39;)
 <p>在此示例中，当<code>eventName</code>的值是<code>&quot;focus&quot;</code>，<code>v-on:[eventName]</code>就等价于<code>v-on:focus</code></p>
 <h3 id="动态参数的限制："><a href="#动态参数的限制：" class="headerlink" title="动态参数的限制："></a>动态参数的限制：</h3><p>动态参数的表达式的值应当是一个字符串，或者是<code>null</code>。特殊值&#96;&#96;&#96;null&#96;&#96;意为移除该绑定。其他的非字符串的值将会触发警告。</p>
 <h3 id="动态参数语法的限制"><a href="#动态参数语法的限制" class="headerlink" title="动态参数语法的限制"></a>动态参数语法的限制</h3><p>动态参数的语法因为某些字符的缘故有一些语法限制，比如空格和引号，在HTML attribute名称中都是不合法的。</p>
-<pre><code>&lt;!-- 这会触发一个编译器警告 --&gt;
+<pre><code class="html">&lt;!-- 这会触发一个编译器警告 --&gt;
 &lt;a :[&#39;foo&#39; + bar]=&quot;value&quot;&gt; ... &lt;/a&gt;
 </code></pre>
 
