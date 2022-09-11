@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>Vue-入门-2 | Ispoon</title>
+        <meta name="author" content="ispoon">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" href="images/icon.jpg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+    <meta name="generator" content="Hexo 6.2.0"></head>
+    <body>
+
+        <div id="L2dCanvas"></div>
+        <script src="/js/live2d.min.js"></script>
+        <script src="/css/live2d.css"></script>
+        <script>
+            var v = new Viewer({
+                width: 240,
+                height: 325,
+                right: "0",
+                bottom: "0",
+                basePath: "/model",
+                role: "dunkeerke_2",
+                mobile: true,
+            });
+        </script>
+        <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:2147483647"></canvas>
+        <script src="/js/fireworks.js"></script>
+        <canvas id="background" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"></canvas><script src="/js/background.js"></script>
+        <div id="cursor"></div>
+        <script src="/css/cursor.css"></script>
+        <script src="/js/cursor.js"></script>
+        
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">ispoon</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;about</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;tags</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;ispoon</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>Vue-入门-2 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/9/4
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/vue/" style="color: #ffa2c4">
+                    vue
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/web/" style="color: #ffa2c4">
+                    web
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p>主要学习了vue的类与样式绑定以及条件渲染等方面的知识</p>
+<h1 id="数据板顶"><a href="#数据板顶" class="headerlink" title="数据板顶"></a>数据板顶</h1><p>数据绑定的一个常见需求是操作元素的CSS class列表和内嵌样式。因为<code>class</code>和<code>style</code>都是attribute，我们可以和其他attribute一样使用<code>v-bind</code>将它们与动态的字符串绑定。但是，在处理比较复杂的绑定时，通过拼接生成字符串是麻烦且容易出错的。因此，vue专门为<code>class</code>和<code>style</code>的<code>v-bind</code>用法提供了特殊的功能增强。除了字符串外，表达式的值也可以是对象或数组。</p>
+<h2 id="绑定对象"><a href="#绑定对象" class="headerlink" title="绑定对象"></a>绑定对象</h2><p>我们可以给<code>:class</code>(<code>v-bind:class</code>的缩写)传递一个对象来动态切换class：</p>
+<pre><code class="template">&lt;div :class=&quot;&#123; active: isActive &#125;&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>上面的语法表示<code>active</code>是否存在取决于数据属性<code>isActive</code>的真假值。<br>你可以在对象中写多个字段来操作多个class。此外，<code>:class</code>指令可以和一般的<code>class</code>attribute共存。</p>
+<pre><code class="js">const isActive = ref(true)
+const hasError = ref(false)
+</code></pre>
+<pre><code class="template">&lt;div
+  class=&quot;static&quot;
+  :class=&quot;&#123; active: isActive, &#39;text-danger&#39;: hasError &#125;&quot;
+&gt;&lt;/div&gt;
+</code></pre>
+<p>对应的渲染结果如下所示：</p>
+<pre><code>&lt;div class=&quot;static active&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>当<code>isActive</code>或者<code>hasError</code>改变时，class列表会随之更新。距离来说，如果<code>hasError</code>变为true,class列表也会变成<code>static active text-danger</code>.<br>绑定的对象并不一定需要写成内联字面量的形式，也可以直接绑定一个对象：</p>
+<pre><code class="js">const classObject = reactive(&#123;
+  active: true,
+  &#39;text-danger&#39;: false
+&#125;)
+</code></pre>
+<pre><code class="template">&lt;div :class=&quot;classObject&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>这也会渲染出同样的效果，我们也可以板顶一个返回对象的计算属性。这是一个常见且很有用的技巧：</p>
+<pre><code class="js">const isActive = ref(true)
+const error = ref(null)
+
+const classObject = computed(() =&gt; (&#123;
+  active: isActive.value &amp;&amp; !error.value,
+  &#39;text-danger&#39;: error.value &amp;&amp; error.value.type === &#39;fatal&#39;
+&#125;))
+</code></pre>
+<pre><code class="template">&lt;div :class=&quot;classObject&quot;&gt;&lt;/div&gt;
+</code></pre>
+<h3 id="绑定数组"><a href="#绑定数组" class="headerlink" title="绑定数组"></a>绑定数组</h3><p>我们可以给<code>:class</code>绑定一个数组来渲染多个CSS class:</p>
+<pre><code class="js">const activeClass = ref(&#39;active&#39;)
+const errorClass = ref(&#39;text-danger&#39;)
+</code></pre>
+<pre><code class="template">&lt;div :class=&quot;[activeClass, errorClass]&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>渲染的结果是：</p>
+<pre><code class="template">&lt;div class=&quot;active text-danger&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>如果你也在数组中有条件的渲染某个class，你可以使用三元表达式：</p>
+<pre><code class="template">&lt;div :class=&quot;[isActive ? activeClass : &#39;&#39;, errorClass]&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p><code>errorClass</code>会一直存在，但是<code>activeClass</code>只会在<code>isActive</code>为真的时候存在。<br>然而，这可能是在由多个依赖条件的class时会有些冗长。因此可以在数组中嵌套对象。</p>
+<pre><code class="template">&lt;div :class=&quot;[&#123; active: isActive &#125;, errorClass]&quot;&gt;&lt;/div&gt;
+</code></pre>
+<h3 id="在组件上使用"><a href="#在组件上使用" class="headerlink" title="在组件上使用"></a>在组件上使用</h3><p>对于只有一个根元素的组件，当你使用了<code>class</code>attribute时，这些class会被添加到根元素上，并与该元素已有的class合并<br>举例来说，如果你声明了以刚刚组件名叫<code>MyComponent</code>，模板如下：</p>
+<pre><code class="template">&lt;!-- 子组件模板 --&gt;
+&lt;p class=&quot;foo bar&quot;&gt;Hi!&lt;/p&gt;
+</code></pre>
+<p>在使用时添加一些class</p>
+<pre><code class="template">&lt;!-- 在使用组件时 --&gt;
+&lt;MyComponent class=&quot;baz boo&quot; /&gt;
+</code></pre>
+<p>渲染出的HTML为：</p>
+<pre><code class="template">&lt;p class=&quot;foo bar baz boo&quot;&gt;Hi&lt;/p&gt;
+</code></pre>
+<p>Class 的绑定也是同样的：</p>
+<pre><code class="template">&lt;MyComponent :class=&quot;&#123; active: isActive &#125;&quot; /&gt;
+</code></pre>
+<p>当<code>isActive</code>为真时，被渲染的HTML会是：</p>
+<pre><code class="template">&lt;MyComponent :class=&quot;&#123; active: isActive &#125;&quot; /&gt;
+</code></pre>
+<p>如果你的组件有多个根元素，他将需要指定那个根元素来接受这个class。你可以通过组件的<code>$attrs</code>属性来实现指定：</p>
+<pre><code class="template">&lt;!-- MyComponent 模板使用 $attrs 时 --&gt;
+&lt;p :class=&quot;$attrs.class&quot;&gt;Hi!&lt;/p&gt;
+&lt;span&gt;This is a child component&lt;/span&gt;
+</code></pre>
+<pre><code class="template">&lt;MyComponent class=&quot;baz&quot; /&gt;
+</code></pre>
+<p>这将被渲染为：</p>
+<pre><code class="html">&lt;p class=&quot;baz&quot;&gt;Hi!&lt;/p&gt;
+&lt;span&gt;This is a child component&lt;/span&gt;
+</code></pre>
+<h2 id="绑定内联样式"><a href="#绑定内联样式" class="headerlink" title="绑定内联样式"></a>绑定内联样式</h2><h3 id="绑定对象-1"><a href="#绑定对象-1" class="headerlink" title="绑定对象"></a>绑定对象</h3><p><code>:style</code>支持绑定JavaScript对象值，对应的是HTML 元素的<code>style</code>属性：</p>
+<pre><code class="js">const activeColor = ref(&#39;red&#39;)
+const fontSize = ref(30)
+</code></pre>
+<pre><code class="template">&lt;div :style=&quot;&#123; color: activeColor, fontSize: fontSize + &#39;px&#39; &#125;&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>尽管推荐使用camelCase，但<code>:style</code>也支持kebab-cased形式的CSS 属性key(对应其css中的实际名称),例如：</p>
+<pre><code class="template">&lt;div :style=&quot;&#123; &#39;font-size&#39;: fontSize + &#39;px&#39; &#125;&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>直接绑定一个样式对象通常是一个好主意，这样可以使模板更加简洁：</p>
+<pre><code class="js">const styleObject = reactive(&#123;
+  color: &#39;red&#39;,
+  fontSize: &#39;13px&#39;
+&#125;)
+</code></pre>
+<pre><code class="template">&lt;div :style=&quot;styleObject&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>同样的，如果样式对象需要更复杂的逻辑，也可以使用返回样式对象的计算属性。</p>
+<h3 id="绑定数组-1"><a href="#绑定数组-1" class="headerlink" title="绑定数组"></a>绑定数组</h3><p>我们还可以给<code>:style</code>绑定一个包含多个样式对象的数组。这些对象会被合并后渲染到同一个元素上：</p>
+<pre><code class="template">&lt;div :style=&quot;[baseStyles, overridingStyles]&quot;&gt;&lt;/div&gt;
+</code></pre>
+<h3 id="自动前缀"><a href="#自动前缀" class="headerlink" title="自动前缀"></a>自动前缀</h3><p>当你在<code>:style</code>中使用了需要浏览器特殊前缀的CSS属性时，vue会为他们加上相应的前缀。vue是在运行时检查该属性是否支持在当前浏览器中使用。如果浏览器不支持某个属性，那么将测试加上各个浏览器特殊前缀，以找到哪一个是被支持的。</p>
+<h3 id="样式多值"><a href="#样式多值" class="headerlink" title="样式多值"></a>样式多值</h3><p>你可以对一个样式属性提供多个（不同前缀的）值，举例来说：</p>
+<pre><code class="template">&lt;div :style=&quot;&#123; display: [&#39;-webkit-box&#39;, &#39;-ms-flexbox&#39;, &#39;flex&#39;] &#125;&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>数组仅会渲染浏览器支持的最后一个值。在这个示例中，在支持不需要特别的前缀的浏览器中都会渲染为<code>display:flex</code></p>
+<h1 id="条件渲染"><a href="#条件渲染" class="headerlink" title="条件渲染"></a>条件渲染</h1><h2 id="v-if"><a href="#v-if" class="headerlink" title="v-if"></a><code>v-if</code></h2><p><code>v-if</code>指令用于条件性的渲染一块内容。这块内容只会在指令的表达式返回真值时才会渲染。</p>
+<pre><code class="template">&lt;h1 v-if=&quot;awesome&quot;&gt;Vue is awesome!&lt;/h1&gt;
+</code></pre>
+<h2 id="v-else"><a href="#v-else" class="headerlink" title="v-else"></a><code>v-else</code></h2><p>可以使用<code>v-else</code>为<code>v-if</code>添加一个”else 区块”。</p>
+<pre><code class="template">&lt;button @click=&quot;awesome = !awesome&quot;&gt;Toggle&lt;/button&gt;
+
+&lt;h1 v-if=&quot;awesome&quot;&gt;Vue is awesome!&lt;/h1&gt;
+&lt;h1 v-else&gt;Oh no 😢&lt;/h1&gt;
+</code></pre>
+<p>一个<code>v-else</code>元素必须跟在一个<code>v-if</code>或者<code>v-else-if</code>元素后面，否则他不会被识别。</p>
+<h2 id="v-else-if"><a href="#v-else-if" class="headerlink" title="v-else-if"></a><code>v-else-if</code></h2><p><code>v-else-if</code>提供的是相当于<code>v-if</code>的”else if 区块”.他可以连续多次重复使用。</p>
+<pre><code class="template">&lt;div v-if=&quot;type === &#39;A&#39;&quot;&gt;
+  A
+&lt;/div&gt;
+&lt;div v-else-if=&quot;type === &#39;B&#39;&quot;&gt;
+  B
+&lt;/div&gt;
+&lt;div v-else-if=&quot;type === &#39;C&#39;&quot;&gt;
+  C
+&lt;/div&gt;
+&lt;div v-else&gt;
+  Not A/B/C
+&lt;/div&gt;
+</code></pre>
+<p>和<code>v-else</code>类似，一个使用<code>v-else-if</code>的元素必须紧跟一个<code>v-if</code>或一个<code>v-else-if</code>元素后面。</p>
+
+    </div>
+    
+</div>
+                         
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 20xx - 2022 ispoon
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @ispoon
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+
+    </body>
+</html>
