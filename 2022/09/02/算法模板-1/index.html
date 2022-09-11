@@ -162,21 +162,21 @@
             
             <span class="tag">
                 
-                <a href="/tags/c-c/" style="color: #ff7d73">
+                <a href="/tags/c-c/" style="color: #03a9f4">
                     c/c++
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/algorithm/" style="color: #03a9f4">
+                <a href="/tags/algorithm/" style="color: #00a596">
                     algorithm
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/codeforce/" style="color: #ffa2c4">
+                <a href="/tags/codeforce/" style="color: #00bcd4">
                     codeforce
                 </a>
             </span>
@@ -226,7 +226,7 @@ void msort(int a[],int l,int r)&#123;
 <p>函数调用</p>
 <pre><code class="c++">msort(a,0,n-1);
 </code></pre>
-<h1 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h1><p>二分法本质上是需要找到对应的边界存在的位置，所以理论上二分法并不需要要求区间是单调的。<br>根据分类数据的不同，我们将问题分为整数二分和浮点数二分，对于整数二分而言，考虑到其存在的可行边界，所以整数二分存在两种模板。<br><img src="/2022/09/02/%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF-1/1.png" alt="二分法的两种情况"><br>· 找到右区间的边界点</p>
+<h1 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h1><p>二分法本质上是需要找到对应的边界存在的位置，所以理论上二分法并不需要要求区间是单调的。<br>根据分类数据的不同，我们将问题分为整数二分和浮点数二分，对于整数二分而言，考虑到其存在的可行边界，所以整数二分存在两种模板。<br><img src="/2022/09/02/%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF-1/2.png" alt="二分法的两种情况"><br>· 找到右区间的边界点</p>
 <pre><code class="c++">int l=0,r=n-1;
 while(l&lt;r)&#123;
     int mid=l+r&gt;&gt;1;
