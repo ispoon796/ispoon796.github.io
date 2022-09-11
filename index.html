@@ -167,7 +167,7 @@
 
 <div class="post">
     <a href="/2022/09/11/vue-学习-4/">
-        <h2 class="post-title">Vue-学习-4</h2>
+        <h2 class="post-title">Vue-入门-4</h2>
     </a>
     <div class="category-and-date">
         
@@ -182,269 +182,6 @@
         <div class="content" v-pre>
             
             <p>主要介绍了列表渲染以及事件处理等方面的知识</p>
-<h1 id="v-for"><a href="#v-for" class="headerlink" title="v-for"></a><code>v-for</code></h1><p>我们可以使用<code>v-for</code>指令基于一个数组来渲染一个列表。<code>v-for</code>指令的值需要使用<code>item in items</code>形式的特殊语法，其中<code>items</code>是源数据的数组，而<code>item</code>是迭代项的别名：</p>
-<pre><code class="js">const items = ref([&#123; message: &#39;Foo&#39; &#125;, &#123; message: &#39;Bar&#39; &#125;])
-</code></pre>
-<pre><code class="template">&lt;li v-for=&quot;item in items&quot;&gt;
-  &#123;&#123; item.message &#125;&#125;
-&lt;/li&gt;
-</code></pre>
-<p>在<code>v-for</code>块中可以完整的访问父作用域内的属性和变量。<code>v-for</code>也支持使用可选的第二个参数表示当前项的位置索引。</p>
-<pre><code class="js">const parentMessage = ref(&#39;Parent&#39;)
-const items = ref([&#123; message: &#39;Foo&#39; &#125;, &#123; message: &#39;Bar&#39; &#125;])
-</code></pre>
-<pre><code class="template">&lt;li v-for=&quot;(item, index) in items&quot;&gt;
-  &#123;&#123; parentMessage &#125;&#125; - &#123;&#123; index &#125;&#125; - &#123;&#123; item.message &#125;&#125;
-&lt;/li&gt;
-</code></pre>
-<p><img src="/2022/09/11/vue-%E5%AD%A6%E4%B9%A0-4/1.png" alt="列表展示的效果"></p>
-<p><code>v-for</code>变量的作用域和下面的JavaScript代码很类似：</p>
-<pre><code class="js">const parentMessage = &#39;Parent&#39;
-const items = [
-  /* ... */
-]
-
-items.forEach((item, index) =&gt; &#123;
-  // 可以访问外层的 `parentMessage`
-  // 而 `item` 和 `index` 只在这个作用域可用
-  console.log(parentMessage, item.message, index)
-&#125;)
-</code></pre>
-<p>注意<code>v-for</code>是如何对应<code>forEach</code>回调的函数签名的，实际上，你也可以在定义<code>v-for</code>的变量别名时使用解构，和解构函数参数类似：</p>
-<pre><code class="template">&lt;li v-for=&quot;&#123; message &#125; in items&quot;&gt;
-  &#123;&#123; message &#125;&#125;
-&lt;/li&gt;
-
-&lt;!-- 有 index 索引时 --&gt;
-&lt;li v-for=&quot;(&#123; message &#125;, index) in items&quot;&gt;
-  &#123;&#123; message &#125;&#125; &#123;&#123; index &#125;&#125;
-&lt;/li&gt;
-</code></pre>
-<p>对于多层嵌套的<code>v-for</code>，作用域的工作方式和函数的作用域很相似。每个<code>v-for</code>作用域都可以访问到父级作用域</p>
-<pre><code class="template">&lt;li v-for=&quot;item in items&quot;&gt;
-  &lt;span v-for=&quot;childItem in item.children&quot;&gt;
-    &#123;&#123; item.message &#125;&#125; &#123;&#123; childItem &#125;&#125;
-  &lt;/span&gt;
-&lt;/li&gt;
-</code></pre>
-<p>你可以使用<code>of</code>作为分割符来替换<code>in</code>，这更接近JavaScript的迭代器语法</p>
-<pre><code class="template">&lt;div v-for=&quot;item of items&quot;&gt;&lt;/div&gt;
-</code></pre>
-<h2 id="v-for与对象"><a href="#v-for与对象" class="headerlink" title="v-for与对象"></a><code>v-for</code>与对象</h2><p>你也可以使用<code>v-for</code>来遍历一个对象的所有属性。遍历的顺序会基于对于该对象的调用<code>object.keys()</code>的返回值决定。</p>
-<pre><code class="js">const myObject = reactive(&#123;
-  title: &#39;How to do lists in Vue&#39;,
-  author: &#39;Jane Doe&#39;,
-  publishedAt: &#39;2016-04-10&#39;
-&#125;)
-</code></pre>
-<pre><code class="template">&lt;ul&gt;
-  &lt;li v-for=&quot;value in myObject&quot;&gt;
-    &#123;&#123; value &#125;&#125;
-  &lt;/li&gt;
-&lt;/ul&gt;
-</code></pre>
-<p>可以通过提供第二个参数表示属性名（例如key):</p>
-<pre><code class="template">&lt;li v-for=&quot;(value, key) in myObject&quot;&gt;
-  &#123;&#123; key &#125;&#125;: &#123;&#123; value &#125;&#125;
-&lt;/li&gt;
-</code></pre>
-<p>第三个参数表示位置索引：</p>
-<pre><code class="template">&lt;li v-for=&quot;(value, key, index) in myObject&quot;&gt;
-  &#123;&#123; index &#125;&#125;. &#123;&#123; key &#125;&#125;: &#123;&#123; value &#125;&#125;
-&lt;/li&gt;
-</code></pre>
-<h2 id="在v-for里使用范围值"><a href="#在v-for里使用范围值" class="headerlink" title="在v-for里使用范围值"></a>在<code>v-for</code>里使用范围值</h2><p><code>v-for</code>可以直接接受一个整数值。在这种用例中，会将该魔板基于<code>1...n</code>的取值范围重复多次</p>
-<pre><code class="template">&lt;span v-for=&quot;n in 10&quot;&gt;&#123;&#123; n &#125;&#125;&lt;/span&gt;
-</code></pre>
-<p>注意此处<code>n</code>的初始是从<code>1</code>开始而并非是<code>0</code></p>
-<h2 id="lt-template-gt-上的v-for"><a href="#lt-template-gt-上的v-for" class="headerlink" title="&lt;template&gt;上的v-for"></a><code>&lt;template&gt;</code>上的<code>v-for</code></h2><p>与模板上的<code>v-if</code>类似，你也可以在<code>&lt;template&gt;</code>标签上使用<code>v-for</code>来渲染一个包含多个元素的块。例如：</p>
-<pre><code class="template">&lt;ul&gt;
-  &lt;template v-for=&quot;item in items&quot;&gt;
-    &lt;li&gt;&#123;&#123; item.msg &#125;&#125;&lt;/li&gt;
-    &lt;li class=&quot;divider&quot; role=&quot;presentation&quot;&gt;&lt;/li&gt;
-  &lt;/template&gt;
-&lt;/ul&gt;
-</code></pre>
-<h2 id="v-for与v-if"><a href="#v-for与v-if" class="headerlink" title="v-for与v-if"></a><code>v-for</code>与<code>v-if</code></h2><p>当它们同时存在与一个节点上时，<code>v-if</code>比<code>v-for</code>的优先级更高。这意味着<code>v-if</code>的条件将无法访问到<code>v-for</code>的作用域内定义的变量别名。</p>
-<pre><code class="template">&lt;!--
- 这会抛出一个错误，因为属性 todo 此时
- 没有在该实例上定义
---&gt;
-&lt;li v-for=&quot;todo in todos&quot; v-if=&quot;!todo.isComplete&quot;&gt;
-  &#123;&#123; todo.name &#125;&#125;
-&lt;/li&gt;
-</code></pre>
-<p>在新外包装一层<code>&lt;template&gt;</code>再在其上使用<code>v-for</code>可以解决这个问题（这也更加明显易读）：</p>
-<pre><code class="template">&lt;template v-for=&quot;todo in todos&quot;&gt;
-  &lt;li v-if=&quot;!todo.isComplete&quot;&gt;
-    &#123;&#123; todo.name &#125;&#125;
-  &lt;/li&gt;
-&lt;/template&gt;
-</code></pre>
-<h2 id="通过key管理状态"><a href="#通过key管理状态" class="headerlink" title="通过key管理状态"></a>通过key管理状态</h2><p>vue默认按照“就地更新”的策略来通过<code>v-for</code>渲染的元素列表。但数据项的顺序改变时，vue不会随着移动DOM元素的顺序，而是就地的更新每个元素，确保他们在原本指定的索引位置上渲染。<br>默认模式是高效的，但只适用于列表渲染输出的结果不依赖于子组件状态或是临时的DOM状态（例如表单输入值）的情况。<br>为了给vue一个提示，以便他可以跟踪每个节点的标识，从而重用和重新排序现有的元素，你需要为每个元素对应的块提供一个惟一的key的attribute</p>
-<pre><code class="template">&lt;div v-for=&quot;item in items&quot; :key=&quot;item.id&quot;&gt;
-  &lt;!-- 内容 --&gt;
-&lt;/div&gt;
-</code></pre>
-<p>当你使用<code>&lt;template v-for&gt;</code>时，<code>key</code>应该被放置在这个<code>&lt;template&gt;</code>容器上：</p>
-<pre><code class="template">&lt;template v-for=&quot;todo in todos&quot; :key=&quot;todo.name&quot;&gt;
-  &lt;li&gt;&#123;&#123; todo.name &#125;&#125;&lt;/li&gt;
-&lt;/template&gt;
-</code></pre>
-<p>推荐在任何可行的时候为<code>v-for</code>提供一个<code>key</code>attribute，除非所迭代的DOM内容非常简单（例如：不包含组件或有状态的DOM元素），或者你想有意采用默认行为来提供性能。<br><code>key</code>绑定的期望值是一个基础类型的值，例如字符串或是number类型。不要用对象作为<code>v-for</code>的key。</p>
-<h2 id="组件上使用v-for"><a href="#组件上使用v-for" class="headerlink" title="组件上使用v-for"></a>组件上使用<code>v-for</code></h2><p>我们可以直接在组件上使用<code>v-for</code>，和在一般的元素上使用没有区别（别忘记提供一个key）：</p>
-<pre><code class="template">&lt;MyComponent v-for=&quot;item in items&quot; :key=&quot;item.id&quot; /&gt;
-</code></pre>
-<p>但是，这不会自动的将任何数据传递给组件，因为组件有自己独立的作用域。为了将迭代后的数据传递到组建中，我们还需要传递props：</p>
-<pre><code class="template">&lt;MyComponent
-  v-for=&quot;(item, index) in items&quot;
-  :item=&quot;item&quot;
-  :index=&quot;index&quot;
-  :key=&quot;item.id&quot;
-/&gt;
-</code></pre>
-<p>不自动将<code>item</code>注入组件的原因是，这会使组件与<code>v-for</code>的工作方式紧密耦合。明确其数据的来源可以使组件在洽情况下重用。</p>
-<h2 id="数组变换侦测"><a href="#数组变换侦测" class="headerlink" title="数组变换侦测"></a>数组变换侦测</h2><h3 id="变更方法"><a href="#变更方法" class="headerlink" title="变更方法"></a>变更方法</h3><p>vue能够侦听响应式数组的变更方式，并在他们被调用的时候触发相关的更新。这些变更方法包括<br><code>push()</code><br><code>pop()</code><br><code>shift()</code><br><code>unshift()</code><br><code>splice()</code><br><code>sort()</code><br><code>reverse()</code></p>
-<h3 id="替换一个数组"><a href="#替换一个数组" class="headerlink" title="替换一个数组"></a>替换一个数组</h3><p>变更方法，顾名思义，就是会对调用它们的原数组进行变更。相对的，也有一些不可变（immutable)方法，例如<code>filter()</code>，<code>concat()</code>和<code>slice()</code>，这些都不会更改为原数组，而总是返回一个新的数组。当遇到的是非变更方法时，我们需要姜旧的数组替换为新的:</p>
-<pre><code class="js">// `items` 是一个数组的 ref
-items.value = items.value.filter((item) =&gt; item.message.match(/Foo/))
-</code></pre>
-<p>你可能认为这将导致vue丢弃现有的DOM并重新渲染整个列表，幸运的是，情况并非如此。vue实现了一些巧妙地方法来最大化对DOM元素的重用，因此用另一个包含部分冲得对象的数组来替换，仍会是一种非常高效的操作。</p>
-<h2 id="展示过滤或排序后的结果"><a href="#展示过滤或排序后的结果" class="headerlink" title="展示过滤或排序后的结果"></a>展示过滤或排序后的结果</h2><p>有时，我们希望显示数组经过过滤或者排序后的内容，而不实际变更或重置原始数据。在这种情况下，你可以创建返回过滤或已排序数组的计算属性<br>举例来说</p>
-<pre><code class="js">const numbers = ref([1, 2, 3, 4, 5])
-
-const evenNumbers = computed(() =&gt; &#123;
-  return numbers.value.filter((n) =&gt; n % 2 === 0)
-&#125;)
-</code></pre>
-<pre><code class="template">&lt;li v-for=&quot;n in evenNumbers&quot;&gt;&#123;&#123; n &#125;&#125;&lt;/li&gt;
-</code></pre>
-<p>在计算属性不可行的情况下（例如在多层嵌套<code>v-for</code>循环中）,你可以使用以下方法：</p>
-<pre><code class="js">const sets = ref([
-  [1, 2, 3, 4, 5],
-  [6, 7, 8, 9, 10]
-])
-
-function even(numbers) &#123;
-  return numbers.filter((number) =&gt; number % 2 === 0)
-&#125;
-</code></pre>
-<pre><code class="template">&lt;ul v-for=&quot;numbers in sets&quot;&gt;
-  &lt;li v-for=&quot;n in even(numbers)&quot;&gt;&#123;&#123; n &#125;&#125;&lt;/li&gt;
-&lt;/ul&gt;
-</code></pre>
-<p>在计算属性中使用<code>reverse()</code>和<code>sort()</code>的时候务必小心！这两个方法将变成原始数据，计算函数中不应该这样做。请在调用这些方法之前创建一个原数组的父本</p>
-<pre><code class="diff">- return numbers.reverse()
-+ return [...numbers].reverse()
-</code></pre>
-<h1 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h1><h2 id="监听事件"><a href="#监听事件" class="headerlink" title="监听事件"></a>监听事件</h2><p>我们可以使用<code>v-on</code>指令（简写成<code>@</code>)来监听DOM事件，并在事件触发时执行对应的JavaScrpit。用法<code>v-on:click=&#39;methodName&#39;或者</code>@click&#x3D;’handler’<code>。 事件处理器的值可以是： 1.**内联事件处理器**：事件被触发时执行的内联JavaScript语句（与</code>onclick&#96;&#96;&#96;类似）。<br>2.<strong>方法事件处理器</strong>：一个指向组件上定义的方法属性名或是路径。</p>
-<h2 id="内联事件处理器"><a href="#内联事件处理器" class="headerlink" title="内联事件处理器"></a>内联事件处理器</h2><p>内联事件处理器通常用于简单场景，例如：</p>
-<pre><code class="js">const count = ref(0)
-</code></pre>
-<pre><code class="template">&lt;button @click=&quot;count++&quot;&gt;Add 1&lt;/button&gt;
-&lt;p&gt;Count is: &#123;&#123; count &#125;&#125;&lt;/p&gt;
-</code></pre>
-<h2 id="方法事件处理器"><a href="#方法事件处理器" class="headerlink" title="方法事件处理器"></a>方法事件处理器</h2><p>随着事件处理器的逻辑变得愈发复杂，内联代码方式变得不够灵活。因此<code>v-on</code>也可以接受一个方法名对某个方法的调用：<br>举例来说：</p>
-<pre><code class="js">const name = ref(&#39;Vue.js&#39;)
-
-function greet(event) &#123;
-  alert(`Hello $&#123;name.value&#125;!`)
-  // `event` 是 DOM 原生事件
-  if (event) &#123;
-    alert(event.target.tagName)
-  &#125;
-&#125;
-</code></pre>
-<pre><code class="template">&lt;!-- `greet` 是上面定义过的方法名 --&gt;
-&lt;button @click=&quot;greet&quot;&gt;Greet&lt;/button&gt;
-</code></pre>
-<p>方法事件处理器会自动接收原生DOM事件并触发执行函数。在上面的例子中，我们能够通过被触发事件的<code>event.target.tagName</code>访问到该DOM 元素。</p>
-<h3 id="方法与内联事件判断"><a href="#方法与内联事件判断" class="headerlink" title="方法与内联事件判断"></a>方法与内联事件判断</h3><p>模板编译器会通过检查<code>v-on</code>的值是否合法的JavaScript标识符或属性访问路径来断定是何种形式的事件处理器。举例来说，<code>foo</code>、<code>foo.bar</code>和<code>foo[&#39;bar&#39;]</code>会被视为方法事件处理器，而<code>foo()</code>和&#96;&#96;&#96;count++&#96;&#96;会视为内联事件处理器。</p>
-<h2 id="在内联处理器中调用方法"><a href="#在内联处理器中调用方法" class="headerlink" title="在内联处理器中调用方法"></a>在内联处理器中调用方法</h2><p>除了直接绑定方法名，你还可以在内联事件处理器中调用方法，这允许我们向方法传入自定义参数以替代原生事件：</p>
-<pre><code class="js">function say(message) &#123;
-  alert(message)
-&#125;
-</code></pre>
-<pre><code class="template">&lt;button @click=&quot;say(&#39;hello&#39;)&quot;&gt;Say hello&lt;/button&gt;
-&lt;button @click=&quot;say(&#39;bye&#39;)&quot;&gt;Say bye&lt;/button&gt;
-</code></pre>
-<h2 id="在内联事件处理器中访问事件的参数"><a href="#在内联事件处理器中访问事件的参数" class="headerlink" title="在内联事件处理器中访问事件的参数"></a>在内联事件处理器中访问事件的参数</h2><p>有时，我们需要在内联事件处理器中访问原生的DOM事件。你可以向该处理器方法出入一个特殊的<code>$event</code>，或者使用内联箭头函数：</p>
-<pre><code class="template">&lt;!-- 使用特殊的 $event 变量 --&gt;
-&lt;button @click=&quot;warn(&#39;Form cannot be submitted yet.&#39;, $event)&quot;&gt;
-  Submit
-&lt;/button&gt;
-
-&lt;!-- 使用内联箭头函数 --&gt;
-&lt;button @click=&quot;(event) =&gt; warn(&#39;Form cannot be submitted yet.&#39;, event)&quot;&gt;
-  Submit
-&lt;/button&gt;
-</code></pre>
-<pre><code class="js">function warn(message, event) &#123;
-  // 这里可以访问原生事件
-  if (event) &#123;
-    event.preventDefault()
-  &#125;
-  alert(message)
-&#125;
-</code></pre>
-<h2 id="事件装饰符"><a href="#事件装饰符" class="headerlink" title="事件装饰符"></a>事件装饰符</h2><p>在处理事件时调用<code>event.preventDefault()</code>或<code>event.stopPropagation()</code>是很常见的。尽管我们可以直接在方法内调用，但如果方法能够专注于数据逻辑而不是去处理DOM事件的细节会更好。<br>为解决这一问题，vue为<code>v-on</code>提供了事件装饰符。修饰符是用<code>.</code>表示指令的后缀，包括如下这些：</p>
-<p><code>.stop</code><br><code>.prevent</code><br><code>.self</code><br><code>.capture</code><br><code>.once</code><br><code>.passive</code></p>
-<pre><code class="template">&lt;!-- 单击事件将停止传递 --&gt;
-&lt;a @click.stop=&quot;doThis&quot;&gt;&lt;/a&gt;
-
-&lt;!-- 提交事件将不再重新加载页面 --&gt;
-&lt;form @submit.prevent=&quot;onSubmit&quot;&gt;&lt;/form&gt;
-
-&lt;!-- 修饰语可以使用链式书写 --&gt;
-&lt;a @click.stop.prevent=&quot;doThat&quot;&gt;&lt;/a&gt;
-
-&lt;!-- 也可以只有修饰符 --&gt;
-&lt;form @submit.prevent&gt;&lt;/form&gt;
-
-&lt;!-- 仅当 event.target 是元素本身时才会触发事件处理器 --&gt;
-&lt;!-- 例如：事件处理器不来自子元素 --&gt;
-&lt;div @click.self=&quot;doThat&quot;&gt;...&lt;/div&gt;
-</code></pre>
-<p><code>.capture</code>、<code>.once</code>和<code>passive</code>修饰符与原生的<code>addEventListener</code>事件相对应</p>
-<pre><code class="template">&lt;!-- 添加事件监听器时，使用 `capture` 捕获模式 --&gt;
-&lt;!-- 例如：指向内部元素的事件，在被内部元素处理前，先被外部处理 --&gt;
-&lt;div @click.capture=&quot;doThis&quot;&gt;...&lt;/div&gt;
-
-&lt;!-- 点击事件最多被触发一次 --&gt;
-&lt;a @click.once=&quot;doThis&quot;&gt;&lt;/a&gt;
-
-&lt;!-- 滚动事件的默认行为 (scrolling) 将立即发生而非等待 `onScroll` 完成 --&gt;
-&lt;!-- 以防其中包含 `event.preventDefault()` --&gt;
-&lt;div @scroll.passive=&quot;onScroll&quot;&gt;...&lt;/div&gt;
-</code></pre>
-<p><code>.passive</code>修饰符一般用于触碰事件的监听器，可以用于改善移动端设备的滚屏性能。</p>
-<h2 id="按键修饰符"><a href="#按键修饰符" class="headerlink" title="按键修饰符"></a>按键修饰符</h2><p>在监听键盘事件时，我们经常需要检查特定的按键。vue允许在<code>v-on</code>或<code>@</code>监听按键事件时添加按键修饰符。</p>
-<pre><code class="template">&lt;!-- 仅在 `key` 为 `Enter` 时调用 `submit` --&gt;
-&lt;input @keyup.enter=&quot;submit&quot; /&gt;
-</code></pre>
-<p>你可以直接使用<code>keyboardEvent.key</code>暴露的按键名称作为修饰符，但需要转为kebabcase形式</p>
-<pre><code class="template">&lt;input @keyup.page-down=&quot;onPageDown&quot; /&gt;
-</code></pre>
-<h3 id="按键别名"><a href="#按键别名" class="headerlink" title="按键别名"></a>按键别名</h3><p>vue为一些常用的按键提供了别名：<br><code>.enter</code><br><code>.tab</code><br><code>.delete</code>（捕获“Delete”和“Backspace”两个按键)<br><code>.esc</code><br><code>.space</code><br><code>.up</code><br><code>.down</code><br><code>.left</code><br><code>.right</code></p>
-<h3 id="系统按键修饰符"><a href="#系统按键修饰符" class="headerlink" title="系统按键修饰符"></a>系统按键修饰符</h3><p>你可以使用如下系统修饰符来出发鼠标或键盘事件监听器，只有当按钮被按下时才会出发。<br><code>.ctrl</code><br><code>.alt`` </code>.shift<code> </code>.meta&#96;&#96;&#96;<br>举例来说：</p>
-<pre><code class="template">&lt;!-- Alt + Enter --&gt;
-&lt;input @keyup.alt.enter=&quot;clear&quot; /&gt;
-
-&lt;!-- Ctrl + 点击 --&gt;
-&lt;div @click.ctrl=&quot;doSomething&quot;&gt;Do something&lt;/div&gt;
-</code></pre>
-<h3 id="exact修饰符"><a href="#exact修饰符" class="headerlink" title=".exact修饰符"></a><code>.exact</code>修饰符</h3><p><code>.exact</code>修饰符允许控制出发一个事件所需的确定组合的系统按键修饰符。</p>
-<pre><code class="template">&lt;!-- 当按下 Ctrl 时，即使同时按下 Alt 或 Shift 也会触发 --&gt;
-&lt;button @click.ctrl=&quot;onClick&quot;&gt;A&lt;/button&gt;
-
-&lt;!-- 仅当按下 Ctrl 且未按任何其他键时才会触发 --&gt;
-&lt;button @click.ctrl.exact=&quot;onCtrlClick&quot;&gt;A&lt;/button&gt;
-
-&lt;!-- 仅当没有按下任何系统按键时触发 --&gt;
-&lt;button @click.exact=&quot;onClick&quot;&gt;A&lt;/button&gt;
-</code></pre>
-<h2 id="鼠标按键修饰符"><a href="#鼠标按键修饰符" class="headerlink" title="鼠标按键修饰符"></a>鼠标按键修饰符</h2><p><code>.left</code><br><code>.right</code><br><code>.middle</code><br>这些修饰符将处理程序限定为由特定鼠标按键触发的事件。</p>
-
             
         </div>
     </div>
@@ -457,7 +194,7 @@ function greet(event) &#123;
         
         <span class="tag">
             
-            <a href="/tags/vue/" style="color: #00a596">
+            <a href="/tags/vue/" style="color: #ffa2c4">
                 vue
             </a>
         </span>
@@ -475,7 +212,7 @@ function greet(event) &#123;
 
 <div class="post">
     <a href="/2022/09/04/vue-学习-3/">
-        <h2 class="post-title">Vue-入门-2</h2>
+        <h2 class="post-title">Vue-入门-3</h2>
     </a>
     <div class="category-and-date">
         
@@ -509,7 +246,7 @@ function greet(event) &#123;
         
         <span class="tag">
             
-            <a href="/tags/web/" style="color: #ffa2c4">
+            <a href="/tags/web/" style="color: #03a9f4">
                 web
             </a>
         </span>
@@ -554,7 +291,7 @@ function greet(event) &#123;
         
         <span class="tag">
             
-            <a href="/tags/web/" style="color: #00a596">
+            <a href="/tags/web/" style="color: #ff7d73">
                 web
             </a>
         </span>
@@ -592,21 +329,21 @@ function greet(event) &#123;
         
         <span class="tag">
             
-            <a href="/tags/codeforce/" style="color: #00a596">
+            <a href="/tags/codeforce/" style="color: #ff7d73">
                 codeforce
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/c-c/" style="color: #00a596">
+            <a href="/tags/c-c/" style="color: #00bcd4">
                 c/c++
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/algorithm/" style="color: #00bcd4">
+            <a href="/tags/algorithm/" style="color: #00a596">
                 algorithm
             </a>
         </span>
@@ -644,14 +381,14 @@ function greet(event) &#123;
         
         <span class="tag">
             
-            <a href="/tags/vue/" style="color: #00a596">
+            <a href="/tags/vue/" style="color: #03a9f4">
                 vue
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/web/" style="color: #00a596">
+            <a href="/tags/web/" style="color: #ffa2c4">
                 web
             </a>
         </span>
