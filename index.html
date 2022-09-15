@@ -201,14 +201,14 @@
         
         <span class="tag">
             
-            <a href="/tags/codeforce/" style="color: #00bcd4">
+            <a href="/tags/codeforce/" style="color: #03a9f4">
                 codeforce
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/vscode/" style="color: #00a596">
+            <a href="/tags/vscode/" style="color: #00bcd4">
                 vscode
             </a>
         </span>
@@ -233,171 +233,7 @@
     <div class="excerpt">
         <div class="content" v-pre>
             
-            <h1 id="侦听器"><a href="#侦听器" class="headerlink" title="侦听器"></a>侦听器</h1><h2 id="基本示例"><a href="#基本示例" class="headerlink" title="基本示例"></a>基本示例</h2><p>计算属性允许我们声明性的计算衍生值。然后再某些情况下，我们需要在状态变化时执行一些“副作用”：例如更改DOM，或是根据异步操作的结果去修改另一处的状态。<br>在组合式API中，我们可以使用<code>watch函数</code>在每次响应式状态发生变化时触发回调函数：</p>
-<pre><code class="vue">&lt;script setup&gt;
-import &#123; ref, watch &#125; from &#39;vue&#39;
-
-const question = ref(&#39;&#39;)
-const answer = ref(&#39;Questions usually contain a question mark. ;-)&#39;)
-
-// 可以直接侦听一个 ref
-watch(question, async (newQuestion, oldQuestion) =&gt; &#123;
-  if (newQuestion.indexOf(&#39;?&#39;) &gt; -1) &#123;
-    answer.value = &#39;Thinking...&#39;
-    try &#123;
-      const res = await fetch(&#39;https://yesno.wtf/api&#39;)
-      answer.value = (await res.json()).answer
-    &#125; catch (error) &#123;
-      answer.value = &#39;Error! Could not reach the API. &#39; + error
-    &#125;
-  &#125;
-&#125;)
-&lt;/script&gt;
-
-&lt;template&gt;
-  &lt;p&gt;
-    Ask a yes/no question:
-    &lt;input v-model=&quot;question&quot; /&gt;
-  &lt;/p&gt;
-  &lt;p&gt;&#123;&#123; answer &#125;&#125;&lt;/p&gt;
-&lt;/template&gt;
-</code></pre>
-<h3 id="侦听数据源的类型"><a href="#侦听数据源的类型" class="headerlink" title="侦听数据源的类型"></a>侦听数据源的类型</h3><p><code>watch</code>的第一个参数可以是不同形式的“数据源”：他可以是一个ref（包括计算属性）、一个响应式的对象，一个getter函数、或多个数据源组成的数组：</p>
-<pre><code class="js">const x = ref(0)
-const y = ref(0)
-
-// 单个 ref
-watch(x, (newX) =&gt; &#123;
-  console.log(`x is $&#123;newX&#125;`)
-&#125;)
-
-// getter 函数
-watch(
-  () =&gt; x.value + y.value,
-  (sum) =&gt; &#123;
-    console.log(`sum of x + y is: $&#123;sum&#125;`)
-  &#125;
-)
-
-// 多个来源组成的数组
-watch([x, () =&gt; y.value], ([newX, newY]) =&gt; &#123;
-  console.log(`x is $&#123;newX&#125; and y is $&#123;newY&#125;`)
-&#125;)
-</code></pre>
-<p>注意，你不能直接修改响应式对象的属性值，例如：</p>
-<pre><code class="js">const obj = reactive(&#123; count: 0 &#125;)
-
-// 错误，因为 watch() 得到的参数是一个 number
-watch(obj.count, (count) =&gt; &#123;
-  console.log(`count is: $&#123;count&#125;`)
-&#125;)
-</code></pre>
-<p>这里需要一个返回该属性的getter函数：</p>
-<pre><code>// 提供一个 getter 函数
-watch(
-  () =&gt; obj.count,
-  (count) =&gt; &#123;
-    console.log(`count is: $&#123;count&#125;`)
-  &#125;
-)
-</code></pre>
-<h2 id="深层侦听器"><a href="#深层侦听器" class="headerlink" title="深层侦听器"></a>深层侦听器</h2><p>直接给<code>watch()</code>传入一个响应式对象，会隐式地创建一个深层侦听器————该回调函数在所有嵌套的变更时都会被触发：</p>
-<pre><code class="js">const obj = reactive(&#123; count: 0 &#125;)
-
-watch(obj, (newValue, oldValue) =&gt; &#123;
-  // 在嵌套的属性变更时触发
-  // 注意：`newValue` 此处和 `oldValue` 是相等的
-  // 因为它们是同一个对象！
-&#125;)
-
-obj.count++
-</code></pre>
-<p>相比之下，一个返回响应式对象的getter函数，只有在返回不同的对象时，才会触发回调：</p>
-<pre><code class="js">watch(
-  () =&gt; state.someObject,
-  () =&gt; &#123;
-    // 仅当 state.someObject 被替换时触发
-  &#125;
-)
-</code></pre>
-<p>你也可以给上面的这个例子添加<code>deep</code>选项，强制转成深层侦听器：</p>
-<pre><code>watch(
-  () =&gt; state.someObject,
-  (newValue, oldValue) =&gt; &#123;
-    // 注意：`newValue` 此处和 `oldValue` 是相等的
-    // *除非* state.someObject 被整个替换了
-  &#125;,
-  &#123; deep: true &#125;
-)
-</code></pre>
-<h2 id="watchEffect"><a href="#watchEffect" class="headerlink" title="watchEffect()"></a><code>watchEffect()</code></h2><p><code>watch()</code>是懒执行的：仅仅当数据源变化时，才会执行回调。但在某些场景时，我们希望在创建侦听器时，立即执行一遍回调。举例来说，我们想要请求一些初始数据，然后在相关状态更改时重新请求数据。我们可以这样写：</p>
-<pre><code class="js">const url = ref(&#39;https://...&#39;)
-const data = ref(null)
-
-async function fetchData() &#123;
-  const response = await fetch(url.value)
-  data.value = await response.json()
-&#125;
-
-// 立即获取
-fetchData()
-// ...再侦听 url 变化
-watch(url, fetchData)
-</code></pre>
-<p>我们可以利用<code>watchEffect()</code>函数来简化上面的代码。<code>watchEffect()</code>会立即执行一遍回调函数，如果这时函数产生了副作用，vue会自动追踪副作用的依赖关系，自动分析出响应源。上面的函数可以重写为：</p>
-<pre><code class="js">watchEffect(async () =&gt; &#123;
-  const response = await fetch(url.value)
-  data.value = await response.json()
-&#125;)
-</code></pre>
-<p>这个例子中，回调会立即会立即执行。在执行期间，他会自动追踪<code>url.value</code>作为依赖（和计算属性的行为类似）。每当<code>url.value</code>变化时，回调会再次执行</p>
-<h3 id="watch-vs-watchEffect"><a href="#watch-vs-watchEffect" class="headerlink" title="watch vs watchEffect"></a><code>watch</code> vs <code>watchEffect</code></h3><p><code>watch</code>和<code>watchEffect</code>都能响应式的执行有副作用的回调。他们之间的主要区别是追踪响应式依赖的方式：<br>· <code>watch</code>值追踪明确侦听的数据源。他不会追踪任何在毁掉中访问到的东西。另外，仅在数据源确实改变时才会触发回调。<code>watch</code>会避免在发生副作用时追踪依赖，因此，我们能够更加精确的控制回调函数的触发时机。<br>· <code>watchEffect</code>，则会在副作用发生起见追踪依赖。它在同步执行过程中，自动追踪所有能访问到的响应式属性。这更加方便，而且代码往往更加简洁，但有时其响应性依赖关系不会那么明确。</p>
-<h2 id="回调函数触发的时机"><a href="#回调函数触发的时机" class="headerlink" title="回调函数触发的时机"></a>回调函数触发的时机</h2><p>当你更改了响应式状态，他可能会同时出发vue组件更新和侦听器回调。<br>默认情况下，用户创建的侦听器回调，都会在vue组件更新之前被调用。这意味着你在侦听器回调中访问的DOM将是被vue更新之前的状态。<br>如果想在侦听器回调中能访问被vue更新之后的DOM，你需要指明<code>flush:&#39;post&#39;</code>选项：</p>
-<pre><code class="js">watch(source, callback, &#123;
-  flush: &#39;post&#39;
-&#125;)
-
-watchEffect(callback, &#123;
-  flush: &#39;post&#39;
-&#125;)
-</code></pre>
-<p>后置刷新的<code>watchEffect()</code>有个方便的别名<code>watchPostEffect()</code>:</p>
-<pre><code class="js">import &#123; watchPostEffect &#125; from &#39;vue&#39;
-
-watchPostEffect(() =&gt; &#123;
-  /* 在 Vue 更新后执行 */
-&#125;)
-</code></pre>
-<h2 id="停止监听器"><a href="#停止监听器" class="headerlink" title="停止监听器"></a>停止监听器</h2><p>在<code>setup()</code>或<code>&lt;script setup&gt;</code>中同步语句创建的侦听器，会自动绑定到宿主组件的实例上，并且会在宿主组件卸载时自动停止。因此，在大多数情况下，你无需关心怎么停止一个侦听器。<br>一个关键点是，侦听器必须用同步语句创建：如果异步回调创建一个侦听器，那么他不会绑定到当前组件上，你必须手动停止他，以防内存泄漏，如下面这个粒子：</p>
-<pre><code class="vue">&lt;script setup&gt;
-import &#123; watchEffect &#125; from &#39;vue&#39;
-
-// 它会自动停止
-watchEffect(() =&gt; &#123;&#125;)
-
-// ...这个则不会！
-setTimeout(() =&gt; &#123;
-  watchEffect(() =&gt; &#123;&#125;)
-&#125;, 100)
-&lt;/script&gt;
-</code></pre>
-<p>需要手动停止一个监听器，请调用<code>watch</code>或<code>watchEffect</code>返回的函数</p>
-<pre><code class="js">const unwatch = watchEffect(() =&gt; &#123;&#125;)
-
-// ...当该侦听器不再需要时
-unwatch()
-</code></pre>
-<p>注意，需要异步创建的侦听器的情况很少，请尽可能的选择同步创建。如果需要等待一些异步数据，你可以使用条件式的侦听逻辑：</p>
-<pre><code class="js">// 需要异步请求得到的数据
-const data = ref(null)
-
-watchEffect(() =&gt; &#123;
-  if (data.value) &#123;
-    // 数据加载后执行某些操作...
-  &#125;
-&#125;)
-</code></pre>
-<h1 id="模板引用"><a href="#模板引用" class="headerlink" title="模板引用"></a>模板引用</h1>
+            <p>主要介绍侦听器</p>
             
         </div>
     </div>
@@ -410,7 +246,7 @@ watchEffect(() =&gt; &#123;
         
         <span class="tag">
             
-            <a href="/tags/vue/" style="color: #03a9f4">
+            <a href="/tags/vue/" style="color: #00a596">
                 vue
             </a>
         </span>
@@ -462,7 +298,7 @@ watchEffect(() =&gt; &#123;
         
         <span class="tag">
             
-            <a href="/tags/web/" style="color: #00a596">
+            <a href="/tags/web/" style="color: #00bcd4">
                 web
             </a>
         </span>
@@ -500,7 +336,7 @@ watchEffect(() =&gt; &#123;
         
         <span class="tag">
             
-            <a href="/tags/c-c/" style="color: #03a9f4">
+            <a href="/tags/c-c/" style="color: #00a596">
                 c/c++
             </a>
         </span>
@@ -514,7 +350,7 @@ watchEffect(() =&gt; &#123;
         
         <span class="tag">
             
-            <a href="/tags/codeforce/" style="color: #00a596">
+            <a href="/tags/codeforce/" style="color: #ffa2c4">
                 codeforce
             </a>
         </span>
@@ -552,14 +388,14 @@ watchEffect(() =&gt; &#123;
         
         <span class="tag">
             
-            <a href="/tags/vue/" style="color: #ffa2c4">
+            <a href="/tags/vue/" style="color: #00bcd4">
                 vue
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/web/" style="color: #00a596">
+            <a href="/tags/web/" style="color: #ff7d73">
                 web
             </a>
         </span>
@@ -597,7 +433,7 @@ watchEffect(() =&gt; &#123;
         
         <span class="tag">
             
-            <a href="/tags/vue/" style="color: #ff7d73">
+            <a href="/tags/vue/" style="color: #03a9f4">
                 vue
             </a>
         </span>
@@ -642,14 +478,14 @@ watchEffect(() =&gt; &#123;
         
         <span class="tag">
             
-            <a href="/tags/vue/" style="color: #00bcd4">
+            <a href="/tags/vue/" style="color: #03a9f4">
                 vue
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/web/" style="color: #00bcd4">
+            <a href="/tags/web/" style="color: #03a9f4">
                 web
             </a>
         </span>
@@ -687,21 +523,21 @@ watchEffect(() =&gt; &#123;
         
         <span class="tag">
             
-            <a href="/tags/c-c/" style="color: #ff7d73">
+            <a href="/tags/c-c/" style="color: #00a596">
                 c/c++
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/algorithm/" style="color: #03a9f4">
+            <a href="/tags/algorithm/" style="color: #00a596">
                 algorithm
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/codeforce/" style="color: #00bcd4">
+            <a href="/tags/codeforce/" style="color: #ffa2c4">
                 codeforce
             </a>
         </span>
@@ -739,14 +575,14 @@ watchEffect(() =&gt; &#123;
         
         <span class="tag">
             
-            <a href="/tags/vue/" style="color: #00bcd4">
+            <a href="/tags/vue/" style="color: #00a596">
                 vue
             </a>
         </span>
         
         <span class="tag">
             
-            <a href="/tags/web/" style="color: #ffa2c4">
+            <a href="/tags/web/" style="color: #03a9f4">
                 web
             </a>
         </span>
