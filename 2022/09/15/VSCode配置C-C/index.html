@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-        <title>Tags: Algorithm | Ispoon</title>
+        <title>VSCode配置C/C++ | Ispoon</title>
         <meta name="author" content="ispoon">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -141,159 +141,169 @@
 </nav>
                     </div>
                     <div id="main">
-                         
-<div class="categories-tags">
+                        
+<div class="article">
+    <div>
+        <h1>VSCode配置C/C++ </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/9/15
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/c-c/" style="color: #00bcd4">
+                    c/c++
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/codeforce/" style="color: #00bcd4">
+                    codeforce
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/vscode/" style="color: #ff7d73">
+                    vscode
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p>主要介绍如何使用配置vscode环境下的代码编程软件，该部分主要适用于备份的。</p>
+<span id="more"></span>
+
+<p>最近正在准备使用vscode使用对代码的书写，不同于visual studio 2019的直接实现，我们需要提前配置如下的文件:<br>·<code>c_cpp_properties.json</code>,<br>·<code>launch.json</code><br>·<code>tasks.json</code><br>如下是对应文件的内容</p>
+<h1 id="c-cpp-properties-json"><a href="#c-cpp-properties-json" class="headerlink" title="c_cpp_properties.json"></a><code>c_cpp_properties.json</code></h1><pre><code class="json">&#123;
+    &quot;configurations&quot;: [
+        &#123;
+            &quot;name&quot;: &quot;Win32&quot;,
+            &quot;includePath&quot;: [
+                &quot;$&#123;workspaceFolder&#125;/**&quot;
+            ],
+            &quot;defines&quot;: [
+                &quot;_DEBUG&quot;,
+                &quot;UNICODE&quot;,
+                &quot;_UNICODE&quot;
+            ],
+            &quot;windowsSdkVersion&quot;: &quot;10.0.17763.0&quot;,
+            &quot;compilerPath&quot;: &quot;F:\\MinGw\\mingw64\\bin\\g++.exe&quot;,
+            &quot;cStandard&quot;: &quot;c11&quot;,
+            &quot;cppStandard&quot;: &quot;c++17&quot;,
+            &quot;intelliSenseMode&quot;: &quot;$&#123;default&#125;&quot;
+        &#125;
+    ],
+    &quot;version&quot;: 4
+&#125;
+</code></pre>
+<h1 id="launch-json"><a href="#launch-json" class="headerlink" title="launch.json"></a><code>launch.json</code></h1><pre><code class="json">&#123;
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    &quot;version&quot;: &quot;0.2.0&quot;,
+    &quot;configurations&quot;: [
+        &#123;
+            &quot;name&quot;: &quot;g++.exe - 生成和调试活动文件&quot;,
+            &quot;type&quot;: &quot;cppdbg&quot;,
+            &quot;request&quot;: &quot;launch&quot;,
+            &quot;program&quot;: &quot;C:\\Windows\\System32\\cmd.exe&quot;,
+            &quot;args&quot;: [
+                &quot;/c&quot;,
+                &quot;$&#123;fileDirname&#125;\\$&#123;fileBasenameNoExtension&#125;.exe&quot;,
+                &quot;&amp;&quot;,
+                &quot;pause&quot;
+            ],
+            &quot;stopAtEntry&quot;: false,
+            &quot;cwd&quot;: &quot;$&#123;fileDirname&#125;&quot;,
+            &quot;environment&quot;: [],
+            &quot;externalConsole&quot;: true,
+            &quot;MIMode&quot;: &quot;gdb&quot;,
+            &quot;miDebuggerPath&quot;: &quot;F:\\MinGw\\mingw64\\bin\\gdb.exe&quot;,
+            &quot;setupCommands&quot;: [
+                &#123;
+                    &quot;description&quot;: &quot;为 gdb 启用整齐打印&quot;,
+                    &quot;text&quot;: &quot;-enable-pretty-printing&quot;,
+                    &quot;ignoreFailures&quot;: true
+                &#125;,
+                &#123;
+                    &quot;description&quot;: &quot;将反汇编风格设置为 Intel&quot;,
+                    &quot;text&quot;: &quot;-gdb-set disassembly-flavor intel&quot;,
+                    &quot;ignoreFailures&quot;: true
+                &#125;
+            ],
+            &quot;preLaunchTask&quot;: &quot;C/C++: g++.exe 生成活动文件&quot;
+        &#125;
+    ]
+&#125;
+</code></pre>
+<h1 id="tasks-json"><a href="#tasks-json" class="headerlink" title="tasks.json"></a><code>tasks.json</code></h1><pre><code class="json">&#123;
+    &quot;version&quot;: &quot;2.0.0&quot;,
+    &quot;tasks&quot;: [
+        &#123;
+            &quot;type&quot;: &quot;shell&quot;,
+            &quot;label&quot;: &quot;task g++&quot;,
+            &quot;command&quot;: &quot;F:\\MinGw\\mingw64\\bin\\g++.exe&quot;,
+            &quot;args&quot;: [
+                &quot;-g&quot;,
+                &quot;$&#123;file&#125;&quot;,
+                &quot;-o&quot;,
+                &quot;$&#123;fileDirname&#125;\\$&#123;fileBasenameNoExtension&#125;.exe&quot;,
+                &quot;-I&quot;,
+                &quot;D:\\VSCODELG&quot;,
+                &quot;-std=c++17&quot;
+            ],
+            &quot;options&quot;: &#123;
+                &quot;cwd&quot;: &quot;F:\\MinGw\\mingw64\\bin&quot;
+            &#125;,
+            &quot;problemMatcher&quot;: [
+                &quot;$gcc&quot;
+            ],
+            &quot;group&quot;: &quot;build&quot;
+        &#125;,
+        &#123;
+            &quot;type&quot;: &quot;cppbuild&quot;,
+            &quot;label&quot;: &quot;C/C++: g++.exe 生成活动文件&quot;,
+            &quot;command&quot;: &quot;F:\\MinGw\\mingw64\\bin\\g++.exe&quot;,
+            &quot;args&quot;: [
+                &quot;-fdiagnostics-color=always&quot;,
+                &quot;-g&quot;,
+                &quot;$&#123;file&#125;&quot;,
+                &quot;-o&quot;,
+                &quot;$&#123;fileDirname&#125;\\$&#123;fileBasenameNoExtension&#125;.exe&quot;
+            ],
+            &quot;options&quot;: &#123;
+                &quot;cwd&quot;: &quot;$&#123;fileDirname&#125;&quot;
+            &#125;,
+            &quot;problemMatcher&quot;: [
+                &quot;$gcc&quot;
+            ],
+            &quot;group&quot;: &#123;
+                &quot;kind&quot;: &quot;build&quot;,
+                &quot;isDefault&quot;: true
+            &#125;,
+            &quot;detail&quot;: &quot;调试器生成的任务。&quot;
+        &#125;
+    ]
+&#125;
+</code></pre>
+
+    </div>
     
-    <div class="all-s">
-        
-        
-        <span>
-            <a href="/tags/vue/" style="background: #ffa2c4">
-                <span class="icon">
-                    <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-                </span>
-                vue
-            </a>
-        </span>
-        
-        
-        <span>
-            <a href="/tags/web/" style="background: #00bcd4">
-                <span class="icon">
-                    <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-                </span>
-                web
-            </a>
-        </span>
-        
-        
-        <span>
-            <a href="/tags/c-c/" style="background: #ff7d73">
-                <span class="icon">
-                    <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-                </span>
-                c/c++
-            </a>
-        </span>
-        
-        
-        <span>
-            <a href="/tags/algorithm/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
-                <span class="icon">
-                    <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-                </span>
-                algorithm
-            </a>
-        </span>
-        
-        
-        <span>
-            <a href="/tags/codeforce/" style="background: #00bcd4">
-                <span class="icon">
-                    <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-                </span>
-                codeforce
-            </a>
-        </span>
-        
-        
-        <span>
-            <a href="/tags/vscode/" style="background: #03a9f4">
-                <span class="icon">
-                    <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-                </span>
-                vscode
-            </a>
-        </span>
-        
-    </div>
-    <div id="archives">
-        
-        <div class="timeline">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2022/9/2</div>
-                <a href="/2022/09/02/算法模板-1/">
-                    <h3>算法模板-1</h3>
-                </a>
-                <div class="info">
-                    
-                    
-                    <span class="tags">
-                        <span class="icon">
-                            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-                        </span>
-                        
-                        <span class="tag">
-                            
-                            <a href="/tags/c-c/" style="color: #ff7d73">
-                                c/c++
-                            </a>
-                        </span>
-                        
-                        <span class="tag">
-                            
-                            <a href="/tags/algorithm/" style="color: #00a596">
-                                algorithm
-                            </a>
-                        </span>
-                        
-                        <span class="tag">
-                            
-                            <a href="/tags/codeforce/" style="color: #00a596">
-                                codeforce
-                            </a>
-                        </span>
-                        
-                    </span>
-                    
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2022/9/11</div>
-                <a href="/2022/09/11/算法模板-2/">
-                    <h3>算法模板-2</h3>
-                </a>
-                <div class="info">
-                    
-                    
-                    <span class="tags">
-                        <span class="icon">
-                            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-                        </span>
-                        
-                        <span class="tag">
-                            
-                            <a href="/tags/c-c/" style="color: #ff7d73">
-                                c/c++
-                            </a>
-                        </span>
-                        
-                        <span class="tag">
-                            
-                            <a href="/tags/algorithm/" style="color: #ff7d73">
-                                algorithm
-                            </a>
-                        </span>
-                        
-                        <span class="tag">
-                            
-                            <a href="/tags/codeforce/" style="color: #00a596">
-                                codeforce
-                            </a>
-                        </span>
-                        
-                    </span>
-                    
-                </div>
-            </div>
-        </div>
-        
-    </div>
 </div>
                          
 <footer id="footer">

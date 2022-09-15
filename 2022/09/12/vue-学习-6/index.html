@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
-        <title>Ispoon</title>
+        <title>Vue-入门-6 | Ispoon</title>
         <meta name="author" content="ispoon">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -141,99 +141,44 @@
 </nav>
                     </div>
                     <div id="main">
-                        <div id="home-head">
-    <div id="home-background" style="background-image: url(images/background.jpg)"></div>
-    
-    <div id="home-info" class="home-info" @click="home_click">
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="loop"></span>
-        <span class="info">
-            <div class="wrap">
-                <h1>ispoon</h1>
-                <h3>ispoon の 窝</h3>
-                <h5></h5>
-            </div>
-        </span>
+                        
+<div class="article">
+    <div>
+        <h1>Vue-入门-6 </h1>
     </div>
-    
-</div>
-
-<div id="home-posts-wrap" class="">
-    <div id="home-posts">
-        <div id="posts">
-            
-
-<div class="post">
-    <a href="/2022/09/15/VSCode配置C-C/">
-        <h2 class="post-title">VSCode配置C/C++</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
-            </span>
-            2022/9/15
-        </span>
-    </div>
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <p>主要介绍如何使用配置vscode环境下的代码编程软件，该部分主要适用于备份的。</p>
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/c-c/" style="color: #ff7d73">
-                c/c++
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/codeforce/" style="color: #00a596">
-                codeforce
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/vscode/" style="color: #ffa2c4">
-                vscode
-            </a>
-        </span>
-        
-    </div>
-    <a href="/2022/09/15/VSCode配置C-C/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2022/09/12/vue-学习-6/">
-        <h2 class="post-title">Vue-入门-6</h2>
-    </a>
-    <div class="category-and-date">
-        
+    <div class="info">
         <span class="date">
             <span class="icon">
                 <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
             </span>
             2022/9/12
         </span>
-    </div>
-    <div class="excerpt">
-        <div class="content" v-pre>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
             
-            <h1 id="侦听器"><a href="#侦听器" class="headerlink" title="侦听器"></a>侦听器</h1><h2 id="基本示例"><a href="#基本示例" class="headerlink" title="基本示例"></a>基本示例</h2><p>计算属性允许我们声明性的计算衍生值。然后再某些情况下，我们需要在状态变化时执行一些“副作用”：例如更改DOM，或是根据异步操作的结果去修改另一处的状态。<br>在组合式API中，我们可以使用<code>watch函数</code>在每次响应式状态发生变化时触发回调函数：</p>
+            <span class="tag">
+                
+                <a href="/tags/vue/" style="color: #ffa2c4">
+                    vue
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/web/" style="color: #00bcd4">
+                    web
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <h1 id="侦听器"><a href="#侦听器" class="headerlink" title="侦听器"></a>侦听器</h1><h2 id="基本示例"><a href="#基本示例" class="headerlink" title="基本示例"></a>基本示例</h2><p>计算属性允许我们声明性的计算衍生值。然后再某些情况下，我们需要在状态变化时执行一些“副作用”：例如更改DOM，或是根据异步操作的结果去修改另一处的状态。<br>在组合式API中，我们可以使用<code>watch函数</code>在每次响应式状态发生变化时触发回调函数：</p>
 <pre><code class="vue">&lt;script setup&gt;
 import &#123; ref, watch &#125; from &#39;vue&#39;
 
@@ -398,412 +343,6 @@ watchEffect(() =&gt; &#123;
 &#125;)
 </code></pre>
 <h1 id="模板引用"><a href="#模板引用" class="headerlink" title="模板引用"></a>模板引用</h1>
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/vue/" style="color: #ffa2c4">
-                vue
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/web/" style="color: #00bcd4">
-                web
-            </a>
-        </span>
-        
-    </div>
-    <a href="/2022/09/12/vue-学习-6/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2022/09/11/vue-学习-5/">
-        <h2 class="post-title">Vue-入门-5</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
-            </span>
-            2022/9/11
-        </span>
-    </div>
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <p>这部分主要介绍表单输入绑定以及生命周期</p>
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/vue/" style="color: #03a9f4">
-                vue
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/web/" style="color: #03a9f4">
-                web
-            </a>
-        </span>
-        
-    </div>
-    <a href="/2022/09/11/vue-学习-5/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2022/09/11/算法模板-2/">
-        <h2 class="post-title">算法模板-2</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
-            </span>
-            2022/9/11
-        </span>
-    </div>
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <p>前缀和、差分、双指针算法的模板实现</p>
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/c-c/" style="color: #00bcd4">
-                c/c++
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/algorithm/" style="color: #03a9f4">
-                algorithm
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/codeforce/" style="color: #ffa2c4">
-                codeforce
-            </a>
-        </span>
-        
-    </div>
-    <a href="/2022/09/11/算法模板-2/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2022/09/11/vue-学习-4/">
-        <h2 class="post-title">Vue-入门-4</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
-            </span>
-            2022/9/11
-        </span>
-    </div>
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <p>主要介绍了列表渲染以及事件处理等方面的知识</p>
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/vue/" style="color: #00bcd4">
-                vue
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/web/" style="color: #ff7d73">
-                web
-            </a>
-        </span>
-        
-    </div>
-    <a href="/2022/09/11/vue-学习-4/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2022/09/04/vue-学习-3/">
-        <h2 class="post-title">Vue-入门-3</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
-            </span>
-            2022/9/4
-        </span>
-    </div>
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <p>主要学习了vue的类与样式绑定以及条件渲染等方面的知识</p>
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/vue/" style="color: #00a596">
-                vue
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/web/" style="color: #03a9f4">
-                web
-            </a>
-        </span>
-        
-    </div>
-    <a href="/2022/09/04/vue-学习-3/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2022/09/03/vue-学习-2/">
-        <h2 class="post-title">Vue-入门-2</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
-            </span>
-            2022/9/3
-        </span>
-    </div>
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <p>该部分是对vue框架中响应式基础部分的学习</p>
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/vue/" style="color: #00a596">
-                vue
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/web/" style="color: #ffa2c4">
-                web
-            </a>
-        </span>
-        
-    </div>
-    <a href="/2022/09/03/vue-学习-2/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2022/09/02/算法模板-1/">
-        <h2 class="post-title">算法模板-1</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
-            </span>
-            2022/9/2
-        </span>
-    </div>
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <p>排序算法，二分算法以及高精度算法的模板实现</p>
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/c-c/" style="color: #00a596">
-                c/c++
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/algorithm/" style="color: #ffa2c4">
-                algorithm
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/codeforce/" style="color: #00a596">
-                codeforce
-            </a>
-        </span>
-        
-    </div>
-    <a href="/2022/09/02/算法模板-1/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2022/09/02/vue-学习-1/">
-        <h2 class="post-title">Vue-入门-1</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
-            </span>
-            2022/9/2
-        </span>
-    </div>
-    <div class="excerpt">
-        <div class="content" v-pre>
-            
-            <p>主要介绍的vue组件部分的相关知识，以及有关指令方面的说明。</p>
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        <span class="icon">
-            <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a href="/tags/vue/" style="color: #00a596">
-                vue
-            </a>
-        </span>
-        
-        <span class="tag">
-            
-            <a href="/tags/web/" style="color: #ff7d73">
-                web
-            </a>
-        </span>
-        
-    </div>
-    <a href="/2022/09/02/vue-学习-1/" class="go-post">阅读全文</a>
-</div>
-
-             
-<div class="page-current">
-    <div class="prev">
-        
-    </div>
-    <div class="page-index">
-        
-        <span class="current">
-            1
-        </span>
-        
-    </div>
-    <div class="next">
-        
-    </div>
-</div>
-        </div>
-    </div>
-    
-    <div id="home-card">
-        <div id="card-div">
-    <div class="card-style" style="width: 300px">
-        <div class="avatar">
-            <img src="images/icon.jpg " alt="avatar">
-        </div>
-        <div class="name">
-            ispoon
-        </div>
-        <div class="descriptions">
-            
-            <div class="description">
-                ispoon YYDS
-            </div>
-            
-        </div>
-        <div class="icon-links">
-            
-            <span class="icon-link">
-                <a target="_blank" rel="noopener" href="https://github.com/ispoon796">
-                    <i class="fa-brands fa-github fa-fw"></i>
-                </a>
-            </span>
-            
-        </div>
-        <div class="friend-links">
-            
-        </div>
-    </div>
-</div>
     </div>
     
 </div>
