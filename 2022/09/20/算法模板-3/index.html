@@ -1,0 +1,780 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>算法模板-3 | Ispoon</title>
+        <meta name="author" content="ispoon">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" href="images/icon.jpg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+    <meta name="generator" content="Hexo 6.2.0"></head>
+    <body>
+
+        <div id="L2dCanvas"></div>
+        <script src="/js/live2d.min.js"></script>
+        <script src="/css/live2d.css"></script>
+        <script>
+            var v = new Viewer({
+                width: 240,
+                height: 325,
+                right: "0",
+                bottom: "0",
+                basePath: "/model",
+                role: "dunkeerke_2",
+                mobile: true,
+            });
+        </script>
+        <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:2147483647"></canvas>
+        <script src="/js/fireworks.js"></script>
+        <canvas id="background" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"></canvas><script src="/js/background.js"></script>
+        <div id="cursor"></div>
+        <script src="/css/cursor.css"></script>
+        <script src="/js/cursor.js"></script>
+        
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">ispoon</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;about</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;tags</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;ispoon</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>算法模板-3 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/9/20
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/c-c/" style="color: #ff7d73">
+                    c/c++
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/algorithm/" style="color: #03a9f4">
+                    algorithm
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/codeforce/" style="color: #ff7d73">
+                    codeforce
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p>主要介绍了图论中比较常见的一些算法，包括图的遍历、最短路算法、最小生成树算法、二分图算法。</p>
+<span id="more"></span> 
+<h1 id="图论"><a href="#图论" class="headerlink" title="图论"></a>图论</h1><p>根据解决问题的不同，我们可以将算法分为如下的几类，以及其对应的可以解决的问题。</p>
+<p><img src="/2022/09/20/%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF-3/1.png" alt="图论分类"></p>
+<h2 id="图的建立"><a href="#图的建立" class="headerlink" title="图的建立"></a>图的建立</h2><p>在介绍常见的算法之前，我们需要首先介绍几种常见的建图方式<br>· <strong>邻接矩阵</strong><br>· <strong>邻接表</strong><br>· <strong>结构体</strong></p>
+<h3 id="邻接矩阵"><a href="#邻接矩阵" class="headerlink" title="邻接矩阵"></a>邻接矩阵</h3><p>对于邻接矩阵而言，其主要针对的是稠密图而言，其中<code>g[i][j]=c</code>表示的是节点 i 和节点 j 之间存在一条两边，且对应的边的长度为c。<br>对于无向图而言，一般而言，我们可以需要同时赋值 g[i][j] 和 g[j][i] 。为了避免在输入的过程中出现重边的情况，对应的边值初始化的方法是：<br><code>g[i][j]=g[j][i]=min(g[i][j],c);</code><br>对于有向图而言，我们只需要赋值g[i][j]即可，同时，我们也需要考虑可能存在的重边情况。<br><code>g[i][j]=min(g[i][j],c);</code></p>
+<h3 id="邻接表"><a href="#邻接表" class="headerlink" title="邻接表"></a>邻接表</h3><p>对于邻接表而言，我们主要采用的数组模拟的方式实现，即通过数组的方式模拟链表，从而构建对应的图结构。对应的邻接表的初始化代码为：</p>
+<pre><code class="c++">const int N=2e5+10;
+int h[N],e[N],ne[N],w[N],idx;
+void init()&#123;
+    memset(h,-1,sizeof h);
+&#125;
+</code></pre>
+<p>其中h[a]表示的是以a为起点的链表的起始位置，e表示的当前链表所指向的值，ne表示的当前链表对应的下一个链表的值，w表示的是对应的权重，idx表示的开辟的可能空间数，其对应的数据结果的具体表现形式如下所示：<br><img src="/2022/09/20/%E7%AE%97%E6%B3%95%E6%A8%A1%E6%9D%BF-3/2.png" alt="邻接表"><br>通过这种方式，我们可以较好地存储对应的稀疏图结构。<br>特别的，对于该图而言，我们对应的添加方式为：</p>
+<pre><code class="c++">void add(int a,int b,int c)&#123;
+    e[idx]=b,w[idx]=c,ne[idx]=h[a],h[a]=idx++;
+&#125;
+</code></pre>
+<h3 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h3><p>对于结构体而言，其主要针对的是不太注重图的物理结构的算法，（比如Bellman_ford算法以及Kruskal算法等等），其对应的存储形式如下所示：</p>
+<pre><code class="c++">struct Edge&#123;
+    int a,b,w;
+&#125;;
+</code></pre>
+<p>对于某些不需要考虑点之间联通关系的算法，该算法可以较快的进行存储。</p>
+<h2 id="图的遍历"><a href="#图的遍历" class="headerlink" title="图的遍历"></a>图的遍历</h2><p>介绍完对应的图的存储方式之后，我们介绍基于邻接表的方式下，对应的图的遍历过程。其他的遍历方式类似，这里就不多做展示了。</p>
+<h3 id="邻接表-1"><a href="#邻接表-1" class="headerlink" title="邻接表"></a>邻接表</h3><p>对于邻接表而言，对应的bfs的遍历方式为：</p>
+<h4 id="BFS"><a href="#BFS" class="headerlink" title="BFS"></a>BFS</h4><pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+#include&lt;queue&gt;
+using namespace std;
+const int N=2e5+10;
+int h[N],e[N],ne[N],idx;
+void add(int a,int b)&#123;
+    e[idx]=b,ne[idx]=h[a],h[a]=idx++;
+&#125;
+int n,m;
+bool st[N];
+int bfs(int a)&#123;
+    queue&lt;int&gt;que;
+    que.push(a);
+    // 通过这样的方式实现遍历的结果
+    while(que.size())&#123;
+        int aa=que.front();que.pop();
+        for(int i=h[aa];i!=-1;i=ne[i])&#123;
+            int j=e[i];
+            if(!st[j]) &#123;
+                que.push(j);
+                st[j]=true;
+            &#125;
+        &#125;
+    &#125;
+&#125;
+int main()&#123;
+    memset(h,-1,sizeof h);
+    scanf(&quot;%d %d&quot;,&amp;n,&amp;m);
+    for(int i=0;i&lt;m;i++)&#123;
+        int a,b;
+        scanf(&quot;%d%d&quot;,&amp;a,&amp;b);
+        add(a,b);
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<h4 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h4><p>对于DFS而言，对应的遍历方式如下所示：</p>
+<pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+#include&lt;queue&gt;
+using namespace std;
+const int N=2e5+10;
+int h[N],e[N],ne[N],idx;
+void add(int a,int b)&#123;
+    e[idx]=b,ne[idx]=h[a],h[a]=idx++;
+&#125;
+int n,m;
+int st[N];
+void dfs(int a)&#123;
+    for(int i=h[a];i!=-1;i=ne[i])&#123;
+        int j=e[i];
+        if(!st[j])&#123;
+            st[j]=true;
+            dfs(j);// 通过这样的方式实现遍历的操作
+        &#125;
+    &#125;
+&#125;
+int main()&#123;
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+    memset(h,-1,sizeof h);
+    while(m--)&#123;
+        int a,b;
+        scanf(&quot;%d%d&quot;,&amp;a,&amp;b);
+        add(a,b);
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<h2 id="最短路问题"><a href="#最短路问题" class="headerlink" title="最短路问题"></a>最短路问题</h2><h3 id="单源最短路问题"><a href="#单源最短路问题" class="headerlink" title="单源最短路问题"></a>单源最短路问题</h3><p>对于单源最短路问题而言，我们主要需要考虑其中是否会出现负权的边。因而其对应的</p>
+<h4 id="dijkstra算法的实现"><a href="#dijkstra算法的实现" class="headerlink" title="dijkstra算法的实现"></a>dijkstra算法的实现</h4><p>对于最短路问题而言，我们可以根据起点的个数分为单源最短路问题，其中对于单源最短路而言，其可以根据对应的边权的种类分成全为正值的最短路以及存在负权的最短路问题。对于全为正值的最短路问题而言，我们可以采用dijsktra算法解决，根据存储图的结构，我们可以将算法分类为</p>
+<p>· 朴素的单源最短路问题  –&gt; 对于稠密图而言<br>· 基于堆优化的最短路问题 –&gt; 对于稀疏图而言</p>
+<p>对于朴素的单源最短路问题而言，其对应的解可以表示为：</p>
+<pre><code class="c++">#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+#include&lt;cstdio&gt;
+#include&lt;queue&gt;
+using namespace std;
+const int N=2e3+10;
+int g[N][N];
+int dist[N];
+bool st[N];
+int n,m;
+int dijkstra()&#123;
+    memset(dist,0x3f,sizeof dist);
+    dist[1]=0;
+    for(int i=0;i&lt;n;i++)&#123;
+        int t=-1;
+        for(int j=1;j&lt;=n;j++)&#123;
+            if(!st[j]&amp;&amp;(t==-1||dist[t]&gt;dist[j]))
+                t=j;
+        &#125;
+        st[t]=true;
+        for(int j=1;j&lt;=n;j++)&#123;
+            dist[j]=min(dist[j],dist[t]+g[t][j]);
+        &#125;
+    &#125;
+    return dist[n];
+&#125;
+int main()&#123;
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+    memset(g,0x3f,sizeof g);
+    for(int i=0;i&lt;m;i++)&#123;
+        int a,b,c;
+        scanf(&quot;%d%d%d&quot;,&amp;a,&amp;b,&amp;c);
+        g[a][b]=min(g[a][b],c);
+    &#125;
+    int t=dijkstra();
+    if(t==0x3f3f3f3f) printf(&quot;-1\n&quot;);
+    else printf(&quot;%d\n&quot;,t);
+    return 0;
+&#125;
+</code></pre>
+<p>对于节点数相对较多的情况，此时如果还是采用邻接矩阵的方式，容易出现存储错误，所以，我们采用的是邻接表的方式实现（借助于堆排序的方式）。需要注意的是，其主要针对的是稠密图的形式。</p>
+<pre><code class="c++">// 采用的是邻接矩阵的方式进行存储
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+#include&lt;cstdio&gt;
+#include&lt;queue&gt;
+using namespace std;
+const int N=2e5+10;
+int h[N],e[N],ne[N],w[N],idx;
+int dist[N];
+bool st[N];
+typedef pair&lt;int,int&gt;PII;
+
+void add(int a,int b,int c)&#123;
+    e[idx]=b,ne[idx]=h[a],w[idx]=c,h[a]=idx++;
+&#125;
+int n,m;
+int dijkstra()&#123;
+    memset(dist,0x3f,sizeof dist);
+    dist[1]=0;
+    priority_queue&lt;PII,vector&lt;PII&gt;,greater&lt;PII&gt;&gt;que;
+    que.push(&#123;0,1&#125;);
+    while(que.size())&#123;
+        auto aa=que.front();que.pop();
+        int ver=aa.second,distance=aa.first;
+        if(st[ver]) continue;
+        st[ver]=true;
+        for(int i=h[ver];i!=-1;i=ne[i])&#123;
+            int j=e[i];
+            if(dist[j]&gt;distance+w[i])&#123;
+                dist[j]=distance+w[i];
+                que.push(&#123;dist[j],j&#125;);
+            &#125;
+        &#125;
+    &#125;
+    return dist[n];
+&#125;
+int main()&#123;
+    memset(h,-1,sizeof h);
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+    for(int i=0;i&lt;m;i++)&#123;
+        int a,b,c;
+        scanf(&quot;%d%d%d&quot;,&amp;a,&amp;b,&amp;c);
+        add(a,b,c);
+    &#125;
+    int t=dijkstra();
+    if(t==0x3f3f3f3f) printf(&quot;-1\n&quot;);
+    else printf(&quot;%d\n&quot;,t);
+&#125;
+</code></pre>
+<h4 id="负权图的实现方式"><a href="#负权图的实现方式" class="headerlink" title="负权图的实现方式"></a>负权图的实现方式</h4><p>如果图中存在负权图的时候，此时就不能通过dijkstra算法去进行实现。其常用的算法主要有bellenman_ford以及spfa算法。<br>其中bellenman_ford算法采用的是结构体的方式实现对图表的存储，其对应的实现方式为：<br>bellenman_ford 算法模板</p>
+<pre><code class="c++">#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+#include&lt;cstdio&gt;
+#include&lt;queue&gt;
+using namespace std;
+const int N=2e5+10;
+struct Edge&#123;
+    int a,b,c;
+&#125;e[N];
+int n,m,k;
+int dist[N],backup[N];
+int bellenman_ford()&#123;
+    memset(dist,0x3f,sizeof dist);
+    dist[1]=0; // 一定要进行初始化
+    for(int i=0;i&lt;k;i++)&#123;
+        memcpy(backup,dist,sizeof dist);
+        for(int j=0;j&lt;m;j++)&#123;
+            int aa=e[j].a,bb=e[j].b,cc=e[j].c;
+            dist[bb]=min(dist[bb],backup[aa]+cc);
+        &#125;
+    &#125;
+    return dist[n];
+&#125;
+int main()&#123;
+    scanf(&quot;%d%d%d&quot;,&amp;n,&amp;m,&amp;k);
+    for(int i=0;i&lt;m;i++)&#123;
+        int a,b,c;
+        scanf(&quot;%d%d%d&quot;,&amp;a,&amp;b,&amp;c);
+        e[i]=&#123;a,b,c&#125;;
+    &#125;
+    int t=bellenman_ford();
+    if(t&gt;0x3f3f3f3f/2) printf(&quot;impossible&quot;);
+    else printf(&quot;%d\n&quot;,t);
+    return 0;
+&#125;
+</code></pre>
+<p>同样的，我们也可以通过spfa算法实现对其的快速搜索：</p>
+<pre><code class="c++">#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+#include&lt;cstdio&gt;
+#include&lt;queue&gt;
+using namespace std;
+const int N=2e5+10;
+int h[N],e[N],w[N],ne[N],idx;
+int dist[N];
+bool st[N];
+int n,m;
+// 添加相应的结果
+void add(int a,int b,int c)&#123;
+    e[idx]=b,ne[idx]=h[a],w[idx]=c,h[a]=idx++;
+&#125;
+
+int spfa()&#123;
+    memset(dist,0x3f,sizeof dist);
+    dist[1]=0;
+    queue&lt;int&gt;q;
+    q.push(1);
+    st[1]=true;// 只有被修改过后才能放入
+    while(q.size())&#123;
+        int aa=q.front();q.pop();
+        st[aa]=false;
+        for(int i=h[aa];i!=-1;i=ne[i])&#123;
+            int j=e[i];
+            if(dist[j]&gt;dist[aa]+w[i])&#123;
+                dist[j]=dist[aa]+w[i];
+                if(!st[j])&#123;
+                    q.push(j);
+                    st[j]=true;
+                &#125;
+            &#125;
+        &#125;    
+    &#125;
+    return dist[n];
+&#125;
+int main()&#123;
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+    memset(h,-1,sizeof h);
+    for(int i=0;i&lt;m;i++)&#123;
+        int a,b,c;
+        scanf(&quot;%d%d%d&quot;,&amp;a,&amp;b,&amp;c);
+        add(a,b,c);
+    &#125;
+    int t=spfa();
+    if(t&gt;0x3f3f3f3f/2) puts(&quot;impossible&quot;);
+    else printf(&quot;%d\n&quot;,t);
+    return 0;
+&#125;
+</code></pre>
+<p>同时，spfa算法还可以判断当前循环中是否存在负环。其本质上就是需要对应的每个点的度数不得大于等于n</p>
+<pre><code class="c++">#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+#include&lt;cstdio&gt;
+#include&lt;queue&gt;
+using namespace std;
+const int N=2e5+10;
+int h[N],e[N],w[N],ne[N],idx;
+int dist[N];
+int cnt[N];
+bool st[N];// 判断当前的状态
+int n,m;
+void add(int a,int b,int c)&#123;
+    e[idx]=b,ne[idx]=h[a],w[idx]=c,h[a]=idx++;
+&#125;
+
+bool spfa()&#123;
+    memset(dist,0x3f,sizeof dist);
+    dist[1]=0;
+    queue&lt;int&gt;q;
+    for(int i=1;i&lt;=n;i++)&#123;
+        q.push(i);
+        st[i]=true;
+    &#125;
+    while(q.size())&#123;
+        int t=q.front();q.pop();
+        st[t]=false;
+        for(int i=h[t];i!=-1;i=ne[i])&#123;
+            int j=e[i];
+            if(dist[j]&gt;dist[t]+w[i])&#123;
+                dist[j]=dist[t]+w[i];
+                if(!st[j])&#123;
+                    q.push(j);
+                    st[j]=true;
+                    cnt[j]=cnt[t]+1;
+                    if(cnt[j]&gt;=n) return true; // 如果是这样的话 就存在负环
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+    return false;// 反之就不存在负环
+&#125;
+int main()&#123;
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+    memset(h,-1,sizeof h);
+    for(int i=0;i&lt;m;i++)&#123;
+        int a,b,c;
+        scanf(&quot;%d%d%d&quot;,&amp;a,&amp;b,&amp;c);
+        add(a,b,c);
+    &#125;
+    if(spfa()) puts(&quot;Yes&quot;);
+    else puts(&quot;No&quot;);
+    return 0;
+&#125;
+</code></pre>
+<h3 id="多源最短路问题"><a href="#多源最短路问题" class="headerlink" title="多源最短路问题"></a>多源最短路问题</h3><p>对于多源最短路而言，我们主要采用的是floyd的方式实现，其对应的存储方式是采用的是邻接矩阵的方式。</p>
+<pre><code class="c++">#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+#include&lt;cstdio&gt;
+#include&lt;queue&gt;
+using namespace std;
+const int N=2e3+10;
+int g[N][N];
+int n,m,k;
+void floyd()&#123;
+    for(int k=1;k&lt;=n;k++)&#123;
+        for(int i=1;i&lt;=n;i++)&#123;
+            for(int j=1;j&lt;=n;j++)&#123;
+                g[i][j]=min(g[i][k]+g[k][j],g[i][j]);
+            &#125;
+        &#125;
+    &#125;
+&#125;
+int main()&#123;
+    memset(g,0x3f,sizeof g);
+    scanf(&quot;%d%d%d&quot;,&amp;n,&amp;m,&amp;k);
+    for(int i=1;i&lt;=n;i++) g[i][i]=0;
+    for(int i=0;i&lt;m;i++)&#123;
+        int a,b,c;
+        scanf(&quot;%d%d%d&quot;,&amp;a,&amp;b,&amp;c);
+        g[a][b]=min(g[a][b],c);
+    &#125;
+    floyd();
+    while(k--)&#123;
+        int a,b;
+        scanf(&quot;%d%d&quot;,&amp;a,&amp;b);
+        if(g[a][b]&gt;0x3f3f3f3f/2) puts(&quot;impossible&quot;);
+        else
+            printf(&quot;%d\n&quot;,g[a][b]);
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<h2 id="最小生成树算法"><a href="#最小生成树算法" class="headerlink" title="最小生成树算法"></a>最小生成树算法</h2><p>对于最小生成树算法而言，一般而言，我们可以采用的算法主要包括prim算法以及kruskal算法。其中，考虑到对应的算法实现的复杂程度，对于prim算法而言，我们一般选择邻接矩阵的方式进行存储；对于kruskal算法而言，我们一般采用邻接表的方式存储。如下是对应部分的代码：</p>
+<h3 id="Prim算法"><a href="#Prim算法" class="headerlink" title="Prim算法"></a>Prim算法</h3><pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+#include&lt;cstdio&gt;
+#include&lt;queue&gt;
+using namespace std;
+const int N=5e2+50;
+const int INF=0x3f3f3f3f;
+int g[N][N];
+int n,m;
+int dist[N];
+int st[N];
+// 对于所有的边进行处理
+int prim()&#123;
+    memset(dist,0x3f,sizeof dist);
+    int res=0;
+    for(int i=0;i&lt;n;i++)&#123;
+        int t=-1;
+        for(int j=1;j&lt;=n;j++)&#123;
+            if(!st[j]&amp;&amp;(t==-1||st[t]&gt;st[j]))
+                t=j;
+        &#125;
+        if(i&amp;&amp;dist[t]==INF) return dist[t];
+        if(i) res+=dist[t];
+        st[t]=true;
+        for(int j=1;j&lt;=n;j++)&#123;
+            dist[j]=min(dist[j],g[t][i]);
+        &#125;
+    &#125;
+    return res;
+&#125;
+int main()&#123;
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+    memset(g,0x3f,sizeof g);
+    for(int i=0;i&lt;m;i++)&#123;
+        int a,b,c;
+        scanf(&quot;%d%d%d&quot;,&amp;a,&amp;b,&amp;c);
+        g[a][b]=g[b][a]=min(g[a][b],c);
+    &#125;
+    int t=prim();
+    if(t==INF) printf(&quot;impossible\n&quot;);
+    else printf(&quot;%d\n&quot;,t);
+    return 0;
+&#125;
+</code></pre>
+<h3 id="kruskal算法"><a href="#kruskal算法" class="headerlink" title="kruskal算法"></a>kruskal算法</h3><pre><code class="c++">// 需要注意的是结构体的边本质上是双线的，所以这里不需要进行额外的处理
+#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+#include&lt;cstdio&gt;
+#include&lt;queue&gt;
+using namespace std;
+const int N=2e5+10;
+
+struct Edge&#123;
+    int a,b,c;
+    bool operator&lt;(const Edge E)&#123;
+        return c&lt;E.c;
+    &#125;
+&#125;e[N];
+int n,m;
+int f[x];
+int find(int x)&#123;
+    if(f[x]!=x) f[x]=findf(f[x]);
+    return f[x];
+&#125;
+
+int main()&#123;
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+    for(int i=0;i&lt;m;i++)&#123;
+        scanf(&quot;%d%d%d&quot;,&amp;e[i].a,&amp;e[i].b,&amp;e[i].c);
+    &#125;
+    sort(e,e+m);
+    for(int i=1;i&lt;=n;i++) f[i]=i;
+    int res=0;
+    int cnt=0;
+    for(int i=0;i&lt;m;i++)&#123;
+        int a=e[i].a,b=e[i].b,c=e[i].c;
+        int aa=find(a);
+        int bb=find(b);
+        if(aa!=bb)&#123;
+            f[aa]=bb;
+            res+=c;
+            cnt++;
+        &#125;
+        if(cnt==n-1)&#123;
+            break;
+        &#125;
+    &#125;
+    if(cnt==n-1) printf(&quot;%d\n&quot;,res);
+    else printf(&quot;impossible\n&quot;);
+    return 0;
+&#125;
+</code></pre>
+<h2 id="二分图问题"><a href="#二分图问题" class="headerlink" title="二分图问题"></a>二分图问题</h2><p>判断一个图是不是二分图，我们常用的方法是染色法，因为对于二分图而言，其不存在对应的奇数环，所以我们可以根据这一个性质实现对于其的判断。</p>
+<h3 id="判断一个图是否为二分图"><a href="#判断一个图是否为二分图" class="headerlink" title="判断一个图是否为二分图"></a>判断一个图是否为二分图</h3><pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+#include&lt;cstdio&gt;
+#include&lt;queue&gt;
+using namespace std;
+const int N=2e5+10;
+int h[N],e[N],ne[N],idx;
+int color[N];
+void add(int a,int b)&#123;
+    e[idx]=b,ne[idx]=h[a],h[a]=idx++;
+&#125;
+int n,m;
+int dfs(int t,int c)&#123;
+    color[t]=c;// 初始染色
+    for(int i=h[t];i!=-1;i=ne[i])&#123;
+        int j=e[i];
+        if(!color[j])&#123;
+            if(!dfs(j,3-c)) return 0;
+        &#125;
+        else if(color[j]==c) return 0;
+    &#125;
+    return 1;
+&#125;
+int main()&#123;
+    scanf(&quot;%d%d&quot;,&amp;n,&amp;m);
+    memset(h,-1,sizeof h);
+    for(int i=0;i&lt;m;i++)&#123;
+        int a,b;
+        scanf(&quot;%d%d&quot;,&amp;a,&amp;b);
+        add(a,b);
+        add(b,a);
+    &#125;
+    int flag=1;
+    for(int i=1;i&lt;=n;i++)&#123;
+        if(!color[i])&#123;
+            if(!dfs(i,1))&#123;
+                flag=0;
+                break;
+            &#125;
+        &#125;
+    &#125;
+    if(flag) printf(&quot;Yes\n&quot;);
+    else printf(&quot;No\n&quot;);
+&#125;
+</code></pre>
+<h3 id="二分图最大匹配问题"><a href="#二分图最大匹配问题" class="headerlink" title="二分图最大匹配问题"></a>二分图最大匹配问题</h3><pre><code class="c++">#include&lt;iostream&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+#include&lt;cstdio&gt;
+#include&lt;queue&gt;
+using namespace std;
+const int N=2e5+10;
+int match[N],st[N];
+int h[N],e[N],ne[N],idx;
+void add(int a,int b)&#123;
+    e[idx]=b,ne[idx]=h[a],h[a]=idx++;
+&#125;
+int n,m,k;
+bool find(int x)&#123;
+    for(int i=h[x];i!=-1;i=ne[i])&#123;
+        int j=e[i];
+        if(!st[j])&#123;
+            st[j]=true;
+            if(!match[j]||find(match[j]))&#123;
+                match[j]=x;
+                return true;
+            &#125;
+        &#125;
+    &#125;
+    return false;
+&#125;
+int main()&#123;
+    scanf(&quot;%d%d%d&quot;,&amp;n,&amp;m,&amp;k);
+    for(int i=0;i&lt;m;i++)&#123;
+        int a,b;
+        scanf(&quot;%d%d&quot;,&amp;a,&amp;b);
+        add(a,b);
+    &#125;
+    int res=0;
+    for(int i=1;i&lt;=n;i++)&#123;
+        memset(st,false,sizeof st);
+        if(find(i)) res++;
+    &#125;
+    printf(&quot;%d\n&quot;,res);
+    return 0;
+&#125;
+</code></pre>
+
+    </div>
+    
+</div>
+                         
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 20xx - 2022 ispoon
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @ispoon
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+
+    </body>
+</html>
