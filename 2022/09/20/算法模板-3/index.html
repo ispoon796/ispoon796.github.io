@@ -162,14 +162,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/c-c/" style="color: #ffa2c4">
+                <a href="/tags/c-c/" style="color: #00bcd4">
                     c/c++
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/codeforce/" style="color: #ffa2c4">
+                <a href="/tags/codeforce/" style="color: #00a596">
                     codeforce
                 </a>
             </span>
@@ -720,7 +720,7 @@ bool find(int x)&#123;
         int j=e[i];
         if(!st[j])&#123;
             st[j]=true;
-            if(!match[j]||find(match[j]))&#123;
+            if(match[j]==0||find(match[j])) &#123;
                 match[j]=x;
                 return true;
             &#125;
@@ -730,14 +730,15 @@ bool find(int x)&#123;
 &#125;
 int main()&#123;
     scanf(&quot;%d%d%d&quot;,&amp;n,&amp;m,&amp;k);
-    for(int i=0;i&lt;m;i++)&#123;
+    memset(h,-1,sizeof h);
+    for(int i=0;i&lt;k;i++)&#123;
         int a,b;
         scanf(&quot;%d%d&quot;,&amp;a,&amp;b);
         add(a,b);
     &#125;
     int res=0;
     for(int i=1;i&lt;=n;i++)&#123;
-        memset(st,false,sizeof st);
+        memset(st,0,sizeof st);
         if(find(i)) res++;
     &#125;
     printf(&quot;%d\n&quot;,res);
