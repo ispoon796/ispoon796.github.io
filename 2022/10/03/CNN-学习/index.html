@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+        <title>CNN-学习 | Ispoon</title>
+        <meta name="author" content="ispoon">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link rel="icon" href="images/icon.jpg">
+        <script src="https://cdn.staticfile.org/instant.page/5.1.0/instantpage.min.js" type="module"></script>
+        <script src="https://cdn.staticfile.org/font-awesome/6.1.1/js/all.min.js"></script>
+        
+        <link rel="stylesheet" href="/css/fonts.min.css">
+        <link rel="stylesheet" href="/css/particlex.css">
+        
+        <script src="https://cdn.staticfile.org/vue/3.2.33/vue.global.prod.min.js"></script>
+        <script src="https://cdn.staticfile.org/animejs/3.2.1/anime.min.js"></script>
+    <meta name="generator" content="Hexo 6.2.0"></head>
+    <body>
+
+        <div id="L2dCanvas"></div>
+        <script src="/js/live2d.min.js"></script>
+        <script src="/css/live2d.css"></script>
+        <script>
+            var v = new Viewer({
+                width: 240,
+                height: 325,
+                right: "0",
+                bottom: "0",
+                basePath: "/model",
+                role: "dunkeerke_2",
+                mobile: true,
+            });
+        </script>
+        <canvas id="fireworks" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:2147483647"></canvas>
+        <script src="/js/fireworks.js"></script>
+        <canvas id="background" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1"></canvas><script src="/js/background.js"></script>
+        
+        <div id="loading" style="height:100vh;width:100vw;position:fixed;display:flex;z-index:200;justify-content:space-between;background:#fff;transition:opacity 0.3s ease-out"><div style="position:fixed;height:100vh;width:100vw;display:flex;justify-content:center;align-items:center"><div id="loadcontent" style="width:50vmin;height:50vmin;padding:50px;border-radius:50%;display:flex;justify-content:center;align-items:center;border:solid 10px #a3ddfb;text-align:center"><div><h2>LOADING...</h2><p style="word-break:keep-all">加载过慢请开启缓存(浏览器默认开启)</p><div><img alt="loading" src="/loading.gif"></div></div></div></div></div>
+        <div id="layout">
+            <i data-fa-symbol="calendar-solid" class="fa-solid fa-calendar fa-fw"></i>
+            <i data-fa-symbol="bookmark-solid" class="fa-solid fa-bookmark fa-fw"></i>
+            <i data-fa-symbol="tags-solid" class="fa-solid fa-tags fa-fw"></i>
+            <transition name="into">
+                <div v-show="show_page" style="display: -not-none">
+                    <div id="menu_show">
+                         
+<nav id="menu">
+    <div class="desktop-menu">
+        <a href="/">
+            <span class="title">ispoon</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;about</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;tags</span>
+        </a>
+        
+    </div>
+    <div :class="'phone-menu ' + menu_show" id="phone-menu">
+        <div class="curtain" @click="menu_show = !menu_show" v-show="menu_show"></div>
+        <div :class="'title'" @click="menu_show = !menu_show">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;ispoon</span>
+        </div>
+        <transition name="slide">
+        <div class="items" v-show="menu_show">
+            
+            <a href="/">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-house fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">home</div>
+                </div>
+            </a>
+            
+            <a href="/about">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-id-card fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">about</div>
+                </div>
+            </a>
+            
+            <a href="/archives">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-box-archive fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">archives</div>
+                </div>
+            </a>
+            
+            <a href="/categories">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">categories</div>
+                </div>
+            </a>
+            
+            <a href="/tags">
+                <div class="item">
+                    <div style="min-width: 20px; max-width: 50px; width: 10%">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </div>
+                    <div style="min-width: 100px; max-width: 150%; width: 20%">tags</div>
+                </div>
+            </a>
+            
+        </div>
+        </transition>
+    </div>
+</nav>
+                    </div>
+                    <div id="main">
+                        
+<div class="article">
+    <div>
+        <h1>CNN-学习 </h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#calendar-solid"></use></svg>
+            </span>
+            2022/10/3
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <svg class="fa-icon"><use xlink:href="#tags-solid"></use></svg>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/MachineLearning/" style="color: #ffa2c4">
+                    MachineLearning
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/DeepLearning/" style="color: #03a9f4">
+                    DeepLearning
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    <div class="content" v-pre>
+        <p>主要介绍的是CNN的背景，设计思路以及实现方式。</p>
+<span id="more"></span>
+<h1 id="Convolutional-Neural-Network-CNN"><a href="#Convolutional-Neural-Network-CNN" class="headerlink" title="Convolutional Neural Network (CNN)"></a>Convolutional Neural Network (CNN)</h1><p>对于传统的分类问题而言，我们可以根据给定样本的特征量表现形式构建与之对应的SVM分类器或决策树分类器。但是当对应的给定的输入为图像时，我们需要考虑，如果去构建与之对应的特征表示。</p>
+<h2 id="模型的建立"><a href="#模型的建立" class="headerlink" title="模型的建立"></a>模型的建立</h2><p>为了更好地描述这个问题，我们先建立对应的数学模型。对于图像分类而言，其对应的数学模型可以表示为：<br><img src="/2022/10/03/CNN-%E5%AD%A6%E4%B9%A0/1.png" alt="CNN的模型建立"><br>其中，一般而言，对于给定的图像而言，我们需要想将其预处理成对应的统一规格的大小，从而更好地表述该问题。<br>根据图像处理相关的知识，我们可以知道对应的图像本质上是与之对应的RGB值表示的，所以，我们可以将原本的图像表示成与之对应的3维张量 (对于灰度图像而言，可以表示成二维的形式) 的形式。因而，我们可以提出第一种特征的表示方式：</p>
+<h3 id="灰度值的特征表示"><a href="#灰度值的特征表示" class="headerlink" title="灰度值的特征表示"></a>灰度值的特征表示</h3><p>为了方便起见，我们可以将给定的图像flatten成与之对应的一维向量，并将其作为对应模型的特征输入。其对应的网络模型可以表示为：<br><img src="/2022/10/03/CNN-%E5%AD%A6%E4%B9%A0/2.png" alt="灰度值的特征表示"></p>
+<p><strong>方法的局限性</strong></p>
+<p>– 输入的特征维度相对较大，复杂度相对较高<br>– 模型的参数过多，很容易发生过拟合\训练不充分的情况。</p>
+<p>虽然，其可能较好的解决的如何将图像输入的问题，但是其同样的引入的一个新的问题，对应给定的图像而言，其对应的输入一般而言是相对较大的。如果我们直接将图像展开成对应的一维向量的表示形式，对应的输入的特征维数是相对较大的。如图所示，当对应的输入图像大小为 $100 \times 100 \times 3$是，此时对于第一层的神经网络而言，其对应的需要计算 $3 \times 10^7$ 次，对应的复杂度相对较大。<br>同时，根据之前学到知识，对应的参数越多，对应的模型的训练次数会相对较多，收敛的会相对较慢（相对于参数较少的模型）。</p>
+<h3 id="基于Patterns的模型特征表示"><a href="#基于Patterns的模型特征表示" class="headerlink" title="基于Patterns的模型特征表示"></a>基于Patterns的模型特征表示</h3><p>根据对于人类认知的学习，我们可以知道，对于人类而言，其一般是通过某些部位实现对于物品的识别。因而，我们可以借助于这种方式实现对于原本的输入特征的简化。将对应的原本的图像的灰度值转换为仅仅通过某些部位的信息实现对于图像的识别，从而实现对于输入特征量的减少操作。<br><img src="/2022/10/03/CNN-%E5%AD%A6%E4%B9%A0/3.png" alt="基于Patterns的模型特征表示"><br>通过这样的方式，我们可以实现对特征的简化。其中，对于不同的神经元而言，其可能检测是不同的部位信息，并将对应的输出结果作为判断图片种类的关键依据。每个神经元检测的是对应的某个具体的部位情况，其对应的数学模型可以表示为：<br><img src="/2022/10/03/CNN-%E5%AD%A6%E4%B9%A0/4.png" alt="基于Patterns的模型表示的数学模型"><br>根据上述的数学描述，我们定义不同神经元检测的位置信息为 Receptive field。宏观上，对应的Receptive field中的灰度值表示的就是对应神经元检测的信息。<br><strong>关于Receptive field的介绍</strong><br>对于 Receptive field 而言，其本质上是对应图像中的中的某个区域。需要注意的是，对于不同的 Receptive field 而言，其对应的区域可能是重叠，也可能是相互交叉，也可能是相互之间不相关的。其具体的表示如下所示：<br><img src="/2022/10/03/CNN-%E5%AD%A6%E4%B9%A0/5.png" alt="Receptive filed类型-1"><br>需要注意的是，对于每个Receptive field可能有多个神经元与之对应。特别的，当对应的Receptive field超过了对应的图像的边界限制，我们可以通过填充(padding)的方式实现对该数据的表示。<br><img src="/2022/10/03/CNN-%E5%AD%A6%E4%B9%A0/6.png" alt="Receptive filed类型-2"><br><strong>关于Receptive field的优化</strong><br>考虑到对于不同的图片而言，其对应的同一个部位的所在的位置可能是不同的；同样的，对于不同的图片而言，同一个 Receptive field 检测到的部位信息可能不同。如下图所示：<br><img src="/2022/10/03/CNN-%E5%AD%A6%E4%B9%A0/7.png" alt="同一个特征的不同位置"><br>因而，为了更好地处理这个问题，我们可以将共享不同神经元对应的参数。即对于不同的 Receptive field而言，其对应的kernel可能是一致的。从而更好较好地解决不同图像中，对应的特征不在同一个位置的情况。<br><img src="/2022/10/03/CNN-%E5%AD%A6%E4%B9%A0/8.png" alt="参数共享"><br>因为，其中对应的kernel可以定义为filter，且对于每个filter而言，其需要遍历整张图片去寻找与之对应的区域。</p>
+<h3 id="基于filter的模型表示"><a href="#基于filter的模型表示" class="headerlink" title="基于filter的模型表示"></a>基于filter的模型表示</h3><p>同上一部分所介绍的一样，为了更好地解决直接导入整张图像导致的输入的维度数相对较多的问题，我们可以采取训练相应的filter的方式，实现对于不同图像的特征的识别。其对应的数学模型如下所示：<br><img src="/2022/10/03/CNN-%E5%AD%A6%E4%B9%A0/9.png" alt="filter的数学模型介绍-1"><br>我们可以通过相应的filter得到的数值，判断原本的图像中是否存在相应的特征信息。同样的，对于通过filter得到的结果而言，我们依旧可以认为其是一种新的类型的图像信息，并将其进行下一轮的filter操作。<br><img src="/2022/10/03/CNN-%E5%AD%A6%E4%B9%A0/10.png" alt="filter的数学模型介绍-2"><br>我们发现，其本质上是上面方法的另一种表示方式。所以，该模型也能较好地解决图像分类中出现的一些常见的问题。</p>
+<h2 id="CNN的模型"><a href="#CNN的模型" class="headerlink" title="CNN的模型"></a>CNN的模型</h2><p>通过上面的原理介绍，其最终的网络模型可以表示为如下的形式：<br><img src="/2022/10/03/CNN-%E5%AD%A6%E4%B9%A0/11.png" alt="CNN的网络模型"><br>其中，对应的卷积层可以提取出相应的Feature map信息，并通过Pooling操作，实现对数据的下采样（从而更好的获得较大范围的特征信息以及较小的计算量）。</p>
+<h2 id="CNN模型的进一步应用"><a href="#CNN模型的进一步应用" class="headerlink" title="CNN模型的进一步应用"></a>CNN模型的进一步应用</h2><p>CNN除了可以应用在相应的图像处理领域，我们还可以将其运用在围棋领域中。与图像类型的是，对应的围棋棋盘可以表示为对应的 $ 19 \times 19 \times 48$ （其中48表示的是对应的状态信息，属于围棋中的先验知识）。对应的输出是对应的每个格子的概率值。需要注意的是，不同于传统意义上的CNN模型，围棋游戏中，由于对应的棋盘大小相对较小，且需要考虑相应的棋盘彼此之间的关系，所以我们最终并没有采用下采样的方法。<br><img src="/2022/10/03/CNN-%E5%AD%A6%E4%B9%A0/12.png" alt="AphaGO 网络模型"></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>对于CNN而言，其创新性的将卷积的概念以及filter的概念引入到的相应的图像分类中，且在后续的不断实验中，其也取得了不错的实验效果。但是其主要处理的还是一些张量信息，对于连续性的向量集合而言（比如语音等信息），其并不能很好的考虑到其之间的相关性，这就需要我们后续的工具实现相印的操作了。</p>
+
+    </div>
+    
+</div>
+                         
+<footer id="footer">
+    <div class="footer-wrap">
+        <div>
+            © 20xx - 2022 ispoon
+            <span class="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            @ispoon
+        </div>
+        <div></div>
+        <div>Based on the <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo Engine</a> & <a
+                target="_blank" rel="noopener" href="https://github.com/argvchs/hexo-theme-particlex">ParticleX Theme</a></div>
+        
+    </div>
+</footer>
+                    </div>
+                </div>
+            </transition>
+            <div id="img_show">
+                <img id="img_content" alt="img_show">
+            </div>
+        </div>
+        <script src="https://cdn.staticfile.org/highlight.js/11.5.1/highlight.min.js"></script>
+        <script src="/js/particlex.js"></script>
+        <script src="/js/showimg.js"></script>
+        
+
+    </body>
+</html>
